@@ -1,0 +1,22 @@
+############################################################
+#													       #
+#													       #
+#				42glands							       #
+#													       #
+#				"TERMCAPS"								   #
+#														   #
+############################################################
+
+Réalistation des termcaps du 42sh:
+
+I/ 	UTILISATION
+
+-> deplacement ligne de commandes (voir suejt pour plus de details)
+
+II/ IMPLEMENTATION
+
+man termcap
+
+III/ COMMENT LE FAIRE
+
+a voir

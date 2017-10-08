@@ -1,0 +1,22 @@
+############################################################
+#													       #
+#													       #
+#				42glands							       #
+#													       #
+#				"Lexer-parser"							   #
+#														   #
+############################################################
+
+Réalistation du parser du 42sh:
+
+I/ 	UTILISATION
+
+	Gerer les tokens speciaux d'une ligne de commandes:
+
+II/ IMPLEMENTATION
+
+Recuperer un char* et le transformer intelligemment en **tab/ qqchose ;
+
+III/ COMMENT LE FAIRE
+
+BOn courage
