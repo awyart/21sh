@@ -27,7 +27,7 @@ void		free_tab_str(char ***tab)
 	*tab = NULL;
 }
 
-void			flush_sh_env(t_sh *env)
+void		flush_sh_env(t_sh *env)
 {
 	free_tab_str(&env->input.split_in);
 	free_str(&env->input.user_in);

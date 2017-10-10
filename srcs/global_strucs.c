@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "parser.h"
 
 const t_shcmd		g_sh_struct[PRC_NB + 1] =
 {

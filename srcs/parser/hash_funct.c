@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int			is_esc_char(char *str)
+int				is_esc_char(char *str)
 {
 	int		i;
 

@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-void ft_init_all(t_sh *sh_env, char **env)
+void	ft_init_all(t_sh *sh_env, char **env)
 {
-	char		**local_env;
+	char	**local_env;
 
 	setlocale(LC_ALL, "");
 	g_fd_ou = STDO;

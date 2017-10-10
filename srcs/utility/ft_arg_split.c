@@ -57,7 +57,7 @@ char		**ft_arg_split(char *str, t_list **list)
 	split_input = NULL;
 	while (*str)
 	{
-		while (*str == ' ')
+		while (ft_isspace(*str))
 			str++;
 		if (*str != '\0')
 			add_arg(&str, list);

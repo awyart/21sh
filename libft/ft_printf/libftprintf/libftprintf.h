@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 18:21:28 by narajaon          #+#    #+#             */
-/*   Updated: 2017/08/22 16:35:26 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/10/09 14:35:38 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,5 @@ int					ft_lltoa_str(long long int n, char *str);
 int					nbr_size(unsigned long long int nbr);
 int					ft_putuni_str(unsigned int uni, char *str);
 int					ft_putstr_uni(unsigned int *uni, char *str);
+
 #endif

@@ -16,7 +16,7 @@ int			export_cmd(t_sh *sh_env, char **bin_path);
 void		parse_input(t_in *input);
 int			is_esc_char(char *str);
 int			get_proc_index(char *cmd, const t_shcmd *cmd_tab);
-char		**get_input(int fd,  char **gnl_leak);
+char		*get_input(int fd, char **gnl_leak);
 int			get_cmd_name(char *cmd_name, char *user_in);
 char		**ft_arg_split(char *str, t_list **list);
 char		*check_bin(char **paths, t_in *input);
@@ -44,6 +44,7 @@ void		sighandler(int sigval);
 void		sig_intercepter(void);
 void		flush_sh_env(t_sh *env);
 void		ft_init_all(t_sh *sh_env, char **env);
+void		ft_exec_cmd(char *comd, t_sh *sh_env, char **cur_dir);
 
 /*utilitary*/
 
@@ -62,5 +63,11 @@ char		*get_cur_dir(char *cur_dir_buff);
 char		**get_env_path(char **env);
 void		remove_var_from_env(char *var, t_list **env);
 void		del_list(void *content, size_t size);
+
+/*parser*/
+void		ft_get_cmd_parsed(char *cmd);
+int			ft_counttoken(char *cmd);
+int			ft_is_token(char *str);
+void		ft_start(char *line, t_sh *sh_env, char **cur_dir);
 
 #endif

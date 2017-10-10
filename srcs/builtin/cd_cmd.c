@@ -21,7 +21,13 @@ int			cd_cmd(t_sh *sh_env, char **bin_path)
 	if (sh_env->input.split_in[0] != NULL &&
 			sh_env->input.split_in[1] != NULL)
 		return (exit_error(CD_INVAL, sh_env->input.split_in[1], "cd", -1));
-	if (sh_env->input.split_in[0] != NULL)
+	if (ft_strcmp(sh_env->input.split_in[0], "-") == 0
+		|| ft_strcmp(sh_env->input.split_in[0], "-1") == 0)
+	{
+		cur_dir = sh_env->prev_dir;
+		ft_printf("%s\n", cur_dir);
+	}
+	else if (sh_env->input.split_in[0] != NULL)
 		cur_dir = sh_env->input.split_in[0];
 	else
 		cur_dir = get_var_val(&sh_env->cmd_env, "HOME");

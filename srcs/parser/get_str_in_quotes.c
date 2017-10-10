@@ -13,14 +13,13 @@ char		*get_str_in_quotes(char *str, int *pos)
 	int		i;
 
 	i = 0;
-	if (*str != '"')
+	if (str[i] != '"')
 	{
-		while (str[i] && (str[i] != ' ' && str[i] != '"'))
+		while (str[i] && (!(ft_isspace(str[i])) && str[i] != '"'))
 			i++;
 		*pos = i;
 		return (ft_strndup(str, i));
 	}
-	str++;
 	i = 0;
 	while (str[i])
 	{

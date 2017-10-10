@@ -57,9 +57,9 @@ static char		*ft_create_word(char *s, int end, int pos)
 	return (str);
 }
 
-static char  	**ft_trim(char **str)
+static char		**ft_trim(char **str)
 {
-	char 	**tmp;
+	char	**tmp;
 	int		i;
 
 	i = -1;
@@ -78,28 +78,27 @@ static char  	**ft_trim(char **str)
 char			**ft_split_cmd(char *s)
 {
 	char	**str;
-	char 	**tmp;
+	char	**tmp;
 	int		words;
-	int		i;
+	int		i[2];
 	int		pos;
-	int		j;
 
 	words = ft_words(s);
-	i = -1;
+	i[0] = -1;
 	pos = 0;
-	j = 0;
+	i[1] = 0;
 	if (!(str = (char**)malloc(sizeof(char*) * (words + 1))))
 		return (NULL);
-	while (s[++i] != '\0')
-		if (s[i] == ';' && ft_check(i, s) == TRUE)
+	while (s[++(i[0])] != '\0')
+		if (s[(i[0])] == ';' && ft_check((i[0]), s) == TRUE)
 		{
-			if (i - pos > 0)
-				str[j++] = ft_create_word(s, i, pos);
-			pos = i + 1;
+			if ((i[0]) - pos > 0)
+				str[(i[1])++] = ft_create_word(s, (i[0]), pos);
+			pos = (i[0]) + 1;
 		}
-	if (i - pos > 0)
-		str[j++] = ft_create_word(s, i, pos);
-	str[j] = NULL;
+	if ((i[0]) - pos > 0)
+		str[(i[1])++] = ft_create_word(s, (i[0]), pos);
+	str[(i[1])] = NULL;
 	tmp = ft_trim(str);
 	return (tmp);
 }

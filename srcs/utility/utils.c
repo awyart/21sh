@@ -13,6 +13,7 @@ char		*get_var_val(t_shenv *cmd_env, char *var)
 	t_list		*tmp;
 	char		*home;
 
+	home = NULL;
 	tmp = cmd_env->env_list;
 	while (tmp)
 	{
@@ -22,5 +23,7 @@ char		*get_var_val(t_shenv *cmd_env, char *var)
 	}
 	if (tmp != NULL)
 		home = tmp->content;
-	return (&home[5]);
+	if (home)
+		return (&home[5]);
+	return (NULL);
 }

@@ -22,7 +22,7 @@ void		ft_print_tab(char **tab)
 {
 	while (*tab)
 	{
-		ft_printf("%s\n", *tab);
+		ft_printf("<%s>\n", *tab);
 		tab++;
 	}
 }

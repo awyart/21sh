@@ -17,8 +17,6 @@ int			echo_cmd(t_sh *sh_env, char **bin_path)
 	if (g_fd_ou == STDO)
 		ft_putstr_fd("\n", g_fd_ou);
 	free_tab_str(&sh_env->input.split_in);
-
 	(void)bin_path;
-	
 	return (0);
 }

@@ -28,6 +28,7 @@ SRC = $(patsubst %,srcs/%,$(SRC1)) \
 		$(patsubst %,srcs/signal/%,$(SRC1)) \
 		$(patsubst %,srcs/utility/%,$(SRC1)) \
 		$(patsubst %,srcs/init/%,$(SRC1)) \
+		$(patsubst %,srcs/l_parser/%,$(SRC1)) \
 
 #FLAG += -lncurses
 #FLAG += -fsanitize=address

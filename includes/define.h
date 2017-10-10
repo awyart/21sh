@@ -1,5 +1,5 @@
-#ifndef DEFNE_H
-# define DEFNE_H
+#ifndef DEFINE_H
+# define DEFINE_H
 
 /*Color pattern*/
 
