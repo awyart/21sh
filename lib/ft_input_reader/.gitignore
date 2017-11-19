@@ -1,0 +1,5 @@
+log.txt
+obj/
+main
+*.o
+*.a

@@ -1,68 +1,60 @@
-NAME = minishell
-HEAD = includes/minishell.h
+NAME:=42sh
+CC:=gcc
 
-ifeq ($(MORE), yes)
-	FLAG = -Werror -Wall -Wextra 
-else
-	FLAG = -g3
-endif
+RM:=/bin/rm -f
+MKDIR:=mkdir -p
 
-PRINTF_DIR = libft/ft_printf
-LIBFT_DIR = libft
-PRINTF_LIB = libftprintf.a
-LIBFT_LIB = libft.a
+CFLAGS:=-Wall -Wextra -Werror
 
-LIB = $(LIBFT_DIR)/$(LIBFT_LIB) \
-	$(PRINTF_DIR)/$(PRINTF_LIB)
+INC_D:=inc
+SCR_D:=src
+LIB_D:=lib
+OBJ_D:=obj
 
-IPATH = includes
-MKFILE = Makefile
+INC:=-I $(INC_D)
+INCLUDES:=$(INC)
+ITEM:=\
+	main.o
+OBJ:=$(addprefix $(OBJ_D)/, $(ITEM))
 
-SRC1 = *.c
+include libs.mk
 
-SRC = $(patsubst %,srcs/%,$(SRC1)) \
-		$(patsubst %,srcs/builtin/%,$(SRC1)) \
-		$(patsubst %,srcs/cmd/%,$(SRC1)) \
-		$(patsubst %,srcs/history/%,$(SRC1)) \
-		$(patsubst %,srcs/parser/%,$(SRC1)) \
-		$(patsubst %,srcs/signal/%,$(SRC1)) \
-		$(patsubst %,srcs/utility/%,$(SRC1)) \
-		$(patsubst %,srcs/init/%,$(SRC1)) \
-		$(patsubst %,srcs/l_parser/%,$(SRC1)) \
-
-#FLAG += -lncurses
-#FLAG += -fsanitize=address
-OBJ = $(SRC:.c=.o)
+vpath %.c src
+vpath %.h inc
 
 all: $(NAME)
 
-$(NAME): $(SRC) $(HEAD) $(MKFILE)
-	@echo "Compiling \033[92m$(LIB)\033[0m..."
-	@make -C $(LIBFT_DIR)/
-	@make -C $(PRINTF_DIR)/
-	@gcc $(SRC) $(FLAG) -I $(IPATH) $(LIB) -o $(NAME)
-	@echo "$(NAME) compilation:\033[92m OK\033[0m"
+$(NAME): $(OBJ)
+	@$(MAKE) -C $(FT_MEM_DIR)
+	@$(MAKE) -C $(FT_STRING_DIR)
+	@$(MAKE) -C $(FT_TERM_DIR)
+	@$(MAKE) -C $(FT_DLIST_DIR)
+	@$(MAKE) -C $(FT_INPUT_READER_DIR)
+	@$(MAKE) -C $(FT_PRINTF_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) -o $(NAME) $(INCLUDES) $(LIBRARIES) $(OBJ)
+
+$(OBJ_D)/%.o: %.c $(HEADER)
+	@$(MKDIR) $(OBJ_D)
+	$(CC) $(CFLAGS) -c -o $@ $< $(INCLUDES)
 
 clean:
-	@echo "Deleting:\033[33m $(PRINTF_LIB), $(LIBFT_LIB) and *.o\033[0m"
-	@rm -f $(OBJ)
-	@make -C $(LIBFT_DIR)/ clean
-	@make -C $(PRINTF_DIR)/ clean
+	@$(MAKE) -C $(FT_MEM_DIR) clean
+	@$(MAKE) -C $(FT_STRING_DIR) clean
+	@$(MAKE) -C $(FT_TERM_DIR) clean
+	@$(MAKE) -C $(FT_DLIST_DIR) clean
+	@$(MAKE) -C $(FT_INPUT_READER_DIR) clean
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	$(RM) -r $(OBJ_D)
 
 fclean: clean
-	@echo "Deleting:\033[33m $(NAME)\033[0m"
-	@echo "Deleting:\033[33m $(PRINTF_LIB), $(LIBFT_LIB) and *.o\033[0m"
-	@rm -f $(NAME)
-	@make -C $(LIBFT_DIR)/ fclean
-	@make -C $(PRINTF_DIR)/ fclean
+	@$(MAKE) -C $(FT_MEM_DIR) fclean
+	@$(MAKE) -C $(FT_STRING_DIR) fclean
+	@$(MAKE) -C $(FT_TERM_DIR) fclean
+	@$(MAKE) -C $(FT_DLIST_DIR) fclean
+	@$(MAKE) -C $(FT_INPUT_READER_DIR) fclean
+	@$(MAKE) -C $(FT_PRINTF_DIR) fclean
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	$(RM) $(NAME)
 
 re: fclean all
-
-git :
-	@git add .
-	@git commit -m "${MSG}"
-
-gitp : fclean git
-	git push
-
-.PHONY: clean fclean re git gitp
