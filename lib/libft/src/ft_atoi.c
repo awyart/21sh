@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/09 15:48:39 by narajaon          #+#    #+#             */
-/*   Updated: 2017/08/22 16:32:11 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/11/24 03:04:15 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
 static int		check_space(const char *str)
 {

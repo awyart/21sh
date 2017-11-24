@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/13 13:49:10 by narajaon          #+#    #+#             */
-/*   Updated: 2017/08/22 16:34:31 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/11/24 03:03:17 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
 char	*ft_strcpy(char *dest, const char *src)
 {

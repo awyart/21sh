@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ultoa_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/11 12:01:44 by narajaon          #+#    #+#             */
-/*   Updated: 2017/08/22 16:35:13 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/11/24 03:03:25 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
 static void		ft_swap(char *a, char *b)
 {

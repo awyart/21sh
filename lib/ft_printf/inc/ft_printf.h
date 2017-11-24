@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 16:33:44 by narajaon          #+#    #+#             */
-/*   Updated: 2017/11/19 12:46:55 by awyart           ###   ########.fr       */
+/*   Updated: 2017/11/24 02:56:09 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_PRINTF_H
 
 # define BUFF_SIZE 2048
-# include "libftprintf.h"
+# include "libft.h"
 # include <inttypes.h>
 # include <stdarg.h>
 # include <limits.h>

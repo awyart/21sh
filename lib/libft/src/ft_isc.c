@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/20 13:52:45 by narajaon          #+#    #+#             */
-/*   Updated: 2017/08/22 16:32:54 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/11/24 03:03:05 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
 int		ft_isc(char c, char to_find)
 {

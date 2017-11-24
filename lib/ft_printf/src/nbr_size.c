@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   nbr_size.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/24 12:13:57 by narajaon          #+#    #+#             */
-/*   Updated: 2017/08/22 16:35:33 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/11/24 03:03:42 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
 int		nbr_size(unsigned long long int nbr)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ltoa_str.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 15:16:21 by narajaon          #+#    #+#             */
-/*   Updated: 2017/08/22 16:34:10 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/11/24 03:03:13 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
 static int		base_len(long n)
 {

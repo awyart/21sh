@@ -54,7 +54,8 @@ ITEM:=\
 	ft_isdigit.o \
 	ft_strcpy_ret.o \
 	ft_iseven.o \
-	ft_strlen.o
+	ft_strlen.o \
+	ft_tablen.o 
 
 OBJ:=$(addprefix ./obj/, $(ITEM))
 

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ultoa.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/12 13:15:36 by narajaon          #+#    #+#             */
-/*   Updated: 2017/08/22 16:35:09 by narajaon         ###   ########.fr       */
+/*   Updated: 2017/11/24 03:03:24 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
 static int		base_len(unsigned long long n)
 {

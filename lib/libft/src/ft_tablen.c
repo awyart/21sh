@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy_ret.c                                    :+:      :+:    :+:   */
+/*   ft_tablen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/26 11:11:58 by narajaon          #+#    #+#             */
-/*   Updated: 2017/11/24 03:03:17 by awyart           ###   ########.fr       */
+/*   Created: 2017/11/24 03:46:23 by awyart            #+#    #+#             */
+/*   Updated: 2017/11/24 03:48:56 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strcpy_ret(char *dest, const char *src)
+int	ft_tablen(char **tab)
 {
-	int i;
+	int	count;
 
-	i = 0;
-	while (src[i])
+	count = 0;
+	if (tab != NULL)
 	{
-		dest[i] = src[i];
-		i++;
+		while (tab[count] != NULL)
+			count++;
+		return (count);
 	}
-	dest[i] = '\0';
-	return (i);
+	return (-1);
 }

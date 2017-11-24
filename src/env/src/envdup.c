@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy_ret.c                                    :+:      :+:    :+:   */
+/*   envdup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/26 11:11:58 by narajaon          #+#    #+#             */
-/*   Updated: 2017/11/24 03:03:17 by awyart           ###   ########.fr       */
+/*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
+/*   Updated: 2017/11/24 03:50:08 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libenv.h"
 
-int		ft_strcpy_ret(char *dest, const char *src)
+char	**envdup(void)
 {
-	int i;
+	char	**env;
+	int		size;
 
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (i);
+	size = ft_tablen(environ);
+	if (!(env = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
+		return (NULL);
+
+
 }
