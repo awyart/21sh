@@ -6,14 +6,13 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 16:33:44 by narajaon          #+#    #+#             */
-/*   Updated: 2017/11/24 02:56:09 by awyart           ###   ########.fr       */
+/*   Updated: 2017/11/24 07:50:04 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# define BUFF_SIZE 2048
 # include "libft.h"
 # include <inttypes.h>
 # include <stdarg.h>
@@ -28,6 +27,8 @@
 # define LL 4
 # define J 5
 # define HH 6
+
+# define BUFF_SIZE 2048
 
 typedef union					u_cast
 {

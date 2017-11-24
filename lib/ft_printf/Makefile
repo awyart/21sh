@@ -16,7 +16,12 @@ OBJ_D:=obj
 INC_D:=inc
 LIB_D:=..
 
-include ../../libs.mk
+INCLUDES = 	-I inc \
+			-I ../libft/inc 
+
+VPATH:=src:inc
+
+HEADER:=libft.h
 
 ITEM:=\
 	conv_char.o \
@@ -38,10 +43,6 @@ ITEM:=\
 
 OBJ:=$(addprefix ./obj/, $(ITEM))
 
-VPATH:=src:inc
-
-HEADER:= ft_printf.h
-
 all: $(NAME)
 
 $(NAME): $(OBJ)
@@ -49,10 +50,9 @@ $(NAME): $(OBJ)
 	@$(RANLIB) $(NAME)
 	@echo ${GREEN}Built $(NAME)${CLEAR}
 
-./${OBJ_D}/%.o: %.c $(HEADERS)
+${OBJ_D}/%.o: %.c 
 	@$(MKDIR) $(OBJ_D)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
-
 clean:
 	@echo ${ORANGE}Cleaning $(NAME)${CLEAR}
 	@$(RM) -r $(OBJ_D)

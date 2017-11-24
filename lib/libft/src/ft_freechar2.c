@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libenv.h                                           :+:      :+:    :+:   */
+/*   ft_freechar2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/11 18:21:28 by narajaon          #+#    #+#             */
-/*   Updated: 2017/11/24 03:44:54 by awyart           ###   ########.fr       */
+/*   Created: 2017/10/03 20:15:17 by awyart            #+#    #+#             */
+/*   Updated: 2017/10/05 18:01:05 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBENV_H
-# define LIBENV_H
+#include "libft.h"
 
-extern char **environ;
+void	ft_freechar2(char **cmd)
+{
+	int i;
 
-char 	*ft_getterm(char **env);
-char	**envdup(void);
-
-#endif
+	i = 0;
+	while (cmd[i] != NULL)
+	{
+		free(cmd[i]);
+		i++;
+	}
+	if (cmd)
+	{
+		free(cmd);
+		cmd = NULL;
+	}
+}
