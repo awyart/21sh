@@ -1,39 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envdup.c                                           :+:      :+:    :+:   */
+/*   ft_dlist_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 20:09:14 by awyart           ###   ########.fr       */
+/*   Created: 2017/11/11 18:04:01 by vbastion          #+#    #+#             */
+/*   Updated: 2017/11/30 22:00:15 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "ft_dlist.h"
 
-static char	**envdup(void)
+void				ft_dlist_free(t_dlist **elem, void (*free_ptr)(void **))
 {
-	char	**env;
-	int		size;
-	int		i;
-
-	size = ft_tablen(environ);
-	i = 0;
-	if (!(env = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
-		return (NULL);
-	while (i < size)
+	if (*elem)
 	{
-		env[i] = ft_strdup(environ[i]);
-		i++;
+		free_ptr(&((*elem)->content));
+		ft_memdel((void **)elem);
 	}
-	return (env);
-}
-
-int 	ft_setupenv(t_environ *env)
-{
-	if (!(env->env = envdup()))
-		return (0);
-	env->size = ft_tablen(env->env);
-	return (1);
 }

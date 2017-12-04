@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envdup.c                                           :+:      :+:    :+:   */
+/*   ft_terms_get.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 20:09:14 by awyart           ###   ########.fr       */
+/*   Created: 2017/11/15 16:09:50 by vbastion          #+#    #+#             */
+/*   Updated: 2017/11/27 13:46:14 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static char	**envdup(void)
+t_terms				*ft_terms_get(void)
 {
-	char	**env;
-	int		size;
-	int		i;
+	static t_terms	terms = { .status = TERM_NULL };
 
-	size = ft_tablen(environ);
-	i = 0;
-	if (!(env = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
-		return (NULL);
-	while (i < size)
+	if (terms.status == TERM_NULL)
 	{
-		env[i] = ft_strdup(environ[i]);
-		i++;
+		ft_bzero(&terms, sizeof(t_terms));
+		terms.status = TERM_INIT;
+		ft_terms_init(&terms);
 	}
-	return (env);
-}
-
-int 	ft_setupenv(t_environ *env)
-{
-	if (!(env->env = envdup()))
-		return (0);
-	env->size = ft_tablen(env->env);
-	return (1);
+	return (&terms);
 }

@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envdup.c                                           :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 20:09:14 by awyart           ###   ########.fr       */
+/*   Created: 2017/04/10 17:06:16 by narajaon          #+#    #+#             */
+/*   Updated: 2017/11/24 03:03:00 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "libft.h"
 
-static char	**envdup(void)
+void	ft_bzero(void *s, size_t n)
 {
-	char	**env;
-	int		size;
-	int		i;
+	char	*s_;
+	size_t	i;
 
-	size = ft_tablen(environ);
+	if (n == 0)
+		return ;
+	s_ = s;
 	i = 0;
-	if (!(env = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
-		return (NULL);
-	while (i < size)
+	while (i < n)
 	{
-		env[i] = ft_strdup(environ[i]);
+		s_[i] = 0;
 		i++;
 	}
-	return (env);
-}
-
-int 	ft_setupenv(t_environ *env)
-{
-	if (!(env->env = envdup()))
-		return (0);
-	env->size = ft_tablen(env->env);
-	return (1);
 }

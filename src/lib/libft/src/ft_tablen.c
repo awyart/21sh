@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envdup.c                                           :+:      :+:    :+:   */
+/*   ft_tablen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 20:09:14 by awyart           ###   ########.fr       */
+/*   Created: 2017/11/24 03:46:23 by awyart            #+#    #+#             */
+/*   Updated: 2017/11/24 03:48:56 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "libft.h"
 
-static char	**envdup(void)
+int	ft_tablen(char **tab)
 {
-	char	**env;
-	int		size;
-	int		i;
+	int	count;
 
-	size = ft_tablen(environ);
-	i = 0;
-	if (!(env = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
-		return (NULL);
-	while (i < size)
+	count = 0;
+	if (tab != NULL)
 	{
-		env[i] = ft_strdup(environ[i]);
-		i++;
+		while (tab[count] != NULL)
+			count++;
+		return (count);
 	}
-	return (env);
-}
-
-int 	ft_setupenv(t_environ *env)
-{
-	if (!(env->env = envdup()))
-		return (0);
-	env->size = ft_tablen(env->env);
-	return (1);
+	return (-1);
 }

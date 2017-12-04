@@ -1,39 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envdup.c                                           :+:      :+:    :+:   */
+/*   ft_uitoa_str.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 20:09:14 by awyart           ###   ########.fr       */
+/*   Created: 2017/07/24 17:07:12 by narajaon          #+#    #+#             */
+/*   Updated: 2017/11/24 03:03:23 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "libft.h"
 
-static char	**envdup(void)
+static int		base_len(long n)
 {
-	char	**env;
-	int		size;
-	int		i;
-
-	size = ft_tablen(environ);
-	i = 0;
-	if (!(env = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
-		return (NULL);
-	while (i < size)
-	{
-		env[i] = ft_strdup(environ[i]);
-		i++;
-	}
-	return (env);
+	if (n < 10)
+		return (1);
+	return (base_len(n / 10) + 1);
 }
 
-int 	ft_setupenv(t_environ *env)
+static char		*to_asci(char *str, long n)
 {
-	if (!(env->env = envdup()))
-		return (0);
-	env->size = ft_tablen(env->env);
-	return (1);
+	if (n >= 10)
+	{
+		to_asci(str, n / 10);
+		to_asci(str, n % 10);
+	}
+	if (n < 10)
+	{
+		while (*str)
+			str++;
+		*str = n + '0';
+	}
+	return (str);
+}
+
+unsigned int	ft_uitoa_str(unsigned int n, char *str)
+{
+	int		len;
+
+	len = base_len(n);
+	to_asci(str, n);
+	return (len);
 }

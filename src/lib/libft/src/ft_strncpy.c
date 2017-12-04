@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envdup.c                                           :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 20:09:14 by awyart           ###   ########.fr       */
+/*   Created: 2017/03/23 09:18:17 by narajaon          #+#    #+#             */
+/*   Updated: 2017/11/24 03:03:21 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "libft.h"
 
-static char	**envdup(void)
+char	*ft_strncpy(char *dest, const char *src, size_t n)
 {
-	char	**env;
-	int		size;
-	int		i;
+	size_t i;
 
-	size = ft_tablen(environ);
 	i = 0;
-	if (!(env = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
-		return (NULL);
-	while (i < size)
+	while (i < n && src[i] != '\0')
 	{
-		env[i] = ft_strdup(environ[i]);
+		dest[i] = src[i];
 		i++;
 	}
-	return (env);
-}
-
-int 	ft_setupenv(t_environ *env)
-{
-	if (!(env->env = envdup()))
-		return (0);
-	env->size = ft_tablen(env->env);
-	return (1);
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
 }

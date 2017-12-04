@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envdup.c                                           :+:      :+:    :+:   */
+/*   ft_freechar2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 20:09:14 by awyart           ###   ########.fr       */
+/*   Created: 2017/10/03 20:15:17 by awyart            #+#    #+#             */
+/*   Updated: 2017/10/05 18:01:05 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "libft.h"
 
-static char	**envdup(void)
+void	ft_freechar2(char **cmd)
 {
-	char	**env;
-	int		size;
-	int		i;
+	int i;
 
-	size = ft_tablen(environ);
 	i = 0;
-	if (!(env = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
-		return (NULL);
-	while (i < size)
+	while (cmd[i] != NULL)
 	{
-		env[i] = ft_strdup(environ[i]);
+		free(cmd[i]);
 		i++;
 	}
-	return (env);
-}
-
-int 	ft_setupenv(t_environ *env)
-{
-	if (!(env->env = envdup()))
-		return (0);
-	env->size = ft_tablen(env->env);
-	return (1);
+	if (cmd)
+	{
+		free(cmd);
+		cmd = NULL;
+	}
 }

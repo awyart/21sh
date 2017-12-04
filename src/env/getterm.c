@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/24 03:40:39 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/24 07:28:40 by awyart           ###   ########.fr       */
+/*   Updated: 2017/11/28 22:53:41 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static char *ft_getenv_term(void)
 	}
 	return (NULL);
 }
+
 
 int	ft_init_term(void)
 {

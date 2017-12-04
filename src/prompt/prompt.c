@@ -1,39 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envdup.c                                           :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 20:09:14 by awyart           ###   ########.fr       */
+/*   Created: 2017/11/27 13:51:28 by awyart            #+#    #+#             */
+/*   Updated: 2017/11/29 20:20:25 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static char	**envdup(void)
+int ft_prompt(void)
 {
-	char	**env;
-	int		size;
-	int		i;
-
-	size = ft_tablen(environ);
-	i = 0;
-	if (!(env = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
-		return (NULL);
-	while (i < size)
-	{
-		env[i] = ft_strdup(environ[i]);
-		i++;
-	}
-	return (env);
+	//afficher des trucs cools ici
+	//tputs("$> ", 1 , &ft_putc);
+	ft_dprintf(STDERR_FILENO, "$> ");
+	return (1);
 }
 
-int 	ft_setupenv(t_environ *env)
+int len_prompt(void)
 {
-	if (!(env->env = envdup()))
-		return (0);
-	env->size = ft_tablen(env->env);
-	return (1);
+	return (3);
 }

@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envdup.c                                           :+:      :+:    :+:   */
+/*   ft_putstr_uni.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 20:09:14 by awyart           ###   ########.fr       */
+/*   Created: 2017/08/12 19:01:07 by narajaon          #+#    #+#             */
+/*   Updated: 2017/11/24 03:03:15 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "libft.h"
 
-static char	**envdup(void)
+int			ft_putstr_uni(unsigned int *uni, char *str)
 {
-	char	**env;
-	int		size;
+	int		ret;
 	int		i;
 
-	size = ft_tablen(environ);
+	ret = 0;
 	i = 0;
-	if (!(env = (char **)ft_memalloc(sizeof(char *) * (size + 1))))
-		return (NULL);
-	while (i < size)
-	{
-		env[i] = ft_strdup(environ[i]);
-		i++;
-	}
-	return (env);
-}
-
-int 	ft_setupenv(t_environ *env)
-{
-	if (!(env->env = envdup()))
-		return (0);
-	env->size = ft_tablen(env->env);
-	return (1);
+	while (uni[i])
+		ret += ft_putuni_str(uni[i++], &str[ret]);
+	return (ret);
 }
