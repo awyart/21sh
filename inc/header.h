@@ -55,6 +55,26 @@ enum					e_term_status
 	TERM_READY
 };
 
+enum    e_toktype
+{
+	WORD,
+	IO_NUMBER,
+	NEWLINE,
+	PIPE,
+	DPIPE,
+	AND,
+	LAND,
+	OR,
+	LOR,
+	SEMICOL,
+	DSEMICOL,
+	BSLASH,
+	LREDIR,
+	RSREDIR,
+	HEREDOC,
+	RDREDIR
+};
+
 typedef struct			s_terms
 {
 	t_termios			prev_term;
@@ -84,6 +104,14 @@ typedef struct			s_reader
 	void				*content;
 }						t_reader;
 
+typedef struct        s_token
+{
+    t_dlist         *first_letter;
+    t_dlist         *last_letter;
+    t_token            *next_tok;
+    enum e_toktype    type;
+}                    t_token;
+
 typedef struct			s_sh
 {
 	t_environ			*env;
@@ -106,7 +134,7 @@ int						ft_putc(int c);
 t_terms					*ft_terms_get(void);
 
 //env
-int 					ft_setupenv(t_environ *env);
+int						ft_setupenv(t_environ *env);
 
 //signal
 void					ft_getsignal(void);
@@ -129,7 +157,7 @@ int						ft_add_character(char c, t_dlist_wrap *wrap);
 int 					ft_printlist(t_dlist_wrap *wrap);
 int 					ft_print_list(t_dlist_wrap *wrap);
 int 					ft_print_list_cursor(t_dlist_wrap *wrap);
-void					ft_refresh_line(t_dlist_wrap *wrap, t_win win, int mode);
+void					ft_refresh_line(t_dlist_wrap *wrap, t_sh *sh, int mode);
 
 // cursor
 int 					ft_mv_cursor(t_dlist_wrap *wrap, int curr_line);
@@ -141,5 +169,8 @@ int 					ft_mv_cursor_wib(t_dlist_wrap *wrap);
 int 					ft_get_relpos(t_dlist_wrap *wrap, char c);
 int 					ft_get_currline(void);
 
+//lexer
+int 					ft_lexer(t_sh *sh);
+int						ft_print_input(t_dlist **list);
 
 #endif

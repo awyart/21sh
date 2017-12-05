@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_freechar2.c                                     :+:      :+:    :+:   */
+/*   print_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/03 20:15:17 by awyart            #+#    #+#             */
-/*   Updated: 2017/10/05 18:01:05 by awyart           ###   ########.fr       */
+/*   Created: 2017/12/05 19:16:02 by awyart            #+#    #+#             */
+/*   Updated: 2017/12/05 19:28:18 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "header.h"
 
-void	ft_freechar2(char **cmd)
+int 	ft_print_input(t_dlist **list)
 {
-	int i;
+	t_dlist *tmp;
+	int 	count;
 
-	i = 0;
-	while (cmd[i] != NULL)
+	tmp = *list;
+	count = 0;
+	dprintf(g_fd, "\n Liste fournie au lexer: \n");
+	while (tmp != NULL)
 	{
-		free(cmd[i]);
-		i++;
+		dprintf(g_fd, "%s", tmp->content);
+		tmp = tmp->next;
+		count++;
 	}
-	if (cmd)
-	{
-		free(cmd);
-		cmd = NULL;
-	}
+	return (count);
 }

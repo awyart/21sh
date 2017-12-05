@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 11:46:12 by vbastion          #+#    #+#             */
-/*   Updated: 2017/11/30 18:06:12 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/05 19:03:04 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void ft_start_process(t_sh *sh)
 		sh->curr_line = ft_get_currline();
 		ft_prompt();
 		ft_read(sh);
-		//ft_lexer();
+		ft_lexer(sh);
 		//ft_parser();
 		//ft_extension();
 		//ft_execution();

@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:28:02 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/04 19:16:26 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/05 18:33:08 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int						move_left_del(t_dlist_wrap *wrapper, t_sh *sh)
 		ft_terms_toggle_key("le");
 	return (1);
 }
+
 int						handle_del(t_dlist_wrap *wrap, t_sh *sh)
 {
 	t_dlist *todel;
@@ -58,10 +59,6 @@ int						handle_del(t_dlist_wrap *wrap, t_sh *sh)
 	ft_dlist_free(&todel, ft_memdel);
 	if (wrap->head == NULL || wrap->head->content == NULL)
 		wrap->head = list;
-	ft_terms_toggle_key("dm");
-	ft_terms_toggle_key("dc");
-	ft_terms_toggle_key("ed");
-	ft_refresh_line(wrap, sh->term->win, 0);
+	ft_refresh_line(wrap, sh, 0);
 	return (1);
-
 }

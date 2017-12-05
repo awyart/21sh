@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 11:50:33 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/04 18:30:52 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/05 19:41:27 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int				ft_read(t_sh *sh)
 	char				c;
 	int					ret;
 
-	
 	ioctl(1, TIOCGWINSZ, &(sh->term->win));
 	ft_bzero(&wrap, sizeof(t_dlist_wrap));
 	while (1)

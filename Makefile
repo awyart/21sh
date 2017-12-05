@@ -39,7 +39,9 @@ ITEM = main.o \
 		ft_read_input.o \
 		refresh_line.o \
 		mvcursor.o \
-		info_cursor.o 
+		info_cursor.o \
+		lexer.o \
+		print_input.o \
 
 OBJ:=$(addprefix $(OBJ_D)/, $(ITEM))
 
@@ -47,7 +49,8 @@ vpath %.c src \
 		src/env \
 		src/signal \
 		src/prompt \
-		src/input_reader
+		src/input_reader \
+		src/lexer
 
 vpath %.h inc ../libft/inc
 

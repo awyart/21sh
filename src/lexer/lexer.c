@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/17 09:41:46 by narajaon          #+#    #+#             */
-/*   Updated: 2017/04/17 09:48:19 by narajaon         ###   ########.fr       */
+/*   Created: 2017/12/05 19:10:42 by awyart            #+#    #+#             */
+/*   Updated: 2017/12/05 19:23:36 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "header.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
+int 	ft_lexer(t_sh *sh)
 {
-	t_list *ptr;
+	t_dlist	*line;
 
-	ptr = lst;
-	while (ptr)
-	{
-		f(ptr);
-		ptr = ptr->next;
-	}
+	line = sh->reader->content;
+	ft_print_input(&line);
+	return (0);
 }

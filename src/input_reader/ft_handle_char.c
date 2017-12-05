@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 11:50:33 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/04 19:28:00 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/05 18:29:46 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,7 @@ int					handle_char(char c, t_dlist_wrap *wrap, t_sh *sh)
 		if (ft_insert_inlist(new, wrap, sh) == 0)
 			return (0);
 	}
-	ft_terms_toggle_key("im");
-	ft_terms_toggle_key("ic");
-	tputs(&c, 1, &ft_putc);
-	ft_terms_toggle_key("ei");
-	ft_refresh_line(wrap, sh->term->win, 1);
-	wrap->pos += 1;
+	wrap->pos++;
+	ft_refresh_line(wrap, sh, 1);
 	return (1);
 }

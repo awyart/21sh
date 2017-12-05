@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 17:22:40 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/04 19:17:17 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/05 16:00:01 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int ft_printlist(t_dlist_wrap *wrap)
 	t_dlist 	*list;
 
 	list = wrap->head;
-	dprintf(g_fd, "\n LIST \n");
+	dprintf(g_fd, "\33[H\33[2JLIST \n");
 	while (list != NULL)
 	{
 		if (list != wrap->cursor)
