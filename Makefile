@@ -42,6 +42,7 @@ ITEM = main.o \
 		info_cursor.o \
 		lexer.o \
 		print_input.o \
+		token.o
 
 OBJ:=$(addprefix $(OBJ_D)/, $(ITEM))
 

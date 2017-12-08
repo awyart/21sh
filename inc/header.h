@@ -57,6 +57,7 @@ enum					e_term_status
 
 enum    e_toktype
 {
+	NEW,
 	WORD,
 	IO_NUMBER,
 	NEWLINE,
@@ -104,13 +105,13 @@ typedef struct			s_reader
 	void				*content;
 }						t_reader;
 
-typedef struct        s_token
+typedef struct			s_token
 {
-    t_dlist         *first_letter;
-    t_dlist         *last_letter;
-    t_token            *next_tok;
-    enum e_toktype    type;
-}                    t_token;
+	t_dlist				*first_letter;
+	t_dlist				*last_letter;
+	t_token				*next;
+	enum e_type			type;
+}						 t_token;
 
 typedef struct			s_sh
 {

@@ -15,8 +15,18 @@
 int 	ft_lexer(t_sh *sh)
 {
 	t_dlist	*line;
+	t_token	*token;
+	t_token *new;
 
 	line = sh->reader->content;
 	ft_print_input(&line);
+	while (line == NULL)
+	{
+		if ((new = ft_create_token(line)) == NULL)
+			return (0);
+		ft_get_token(token);
+		ft_add_token(new, &token);
+		line = new->last_letter->next;
+	}
 	return (0);
 }
