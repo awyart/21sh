@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 11:50:33 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/05 19:41:27 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/09 16:03:40 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int				ft_read(t_sh *sh)
 	}
 	if (!(sh->reader = (t_reader *)ft_memalloc(sizeof(t_reader))))
 		return (0);
+	//ft_handle_quote(wrap);
 	sh->reader->status = 0;
 	sh->reader->content = (void *)wrap.head;
 	return (1);

@@ -1,0 +1,24 @@
+	";" -> renvoyer la commande jusqu'a pos a l'execution 
+	
+	">" -> tout ce qui aller a la sortie standard va dans le fichier decrit;
+	
+	"0>" -> redirige l'entree standard
+
+	"1>" -> redirige STDOUT
+
+	"2>" -> redirige STDERR
+
+	">>" -> idem mais a la fin du fichier
+	
+	"<"  -> redirection d'entrée: prendre en entree ce qu'il ya. a droite;
+	
+	"|"  -> utiliser la sortie standard de gauche en tant qu'entree a droite;
+	 "|&" - > rediriger la sortie d'erreur aussi
+
+	">&" -> redirige vers un autre 
+
+	"\" -> escape le prochain caractere
+
+	""" -> transforme la suite en chaine de caracteres interpretable
+
+	"'" -> transforme la suite en chaine de caracteres non interpretable

@@ -36,6 +36,7 @@ extern unsigned ospeed;
 
 typedef struct termios	t_termios;
 typedef struct winsize	t_win;
+typedef struct s_token	t_token;
 typedef int				(*t_intfunc)();
 
 int g_fd; // pour interface de controle
@@ -55,7 +56,7 @@ enum					e_term_status
 	TERM_READY
 };
 
-enum    e_toktype
+enum    e_type
 {
 	NEW,
 	WORD,
@@ -110,7 +111,7 @@ typedef struct			s_token
 	t_dlist				*first_letter;
 	t_dlist				*last_letter;
 	t_token				*next;
-	enum e_type			type;
+	enum e_type			e_type;
 }						 t_token;
 
 typedef struct			s_sh
@@ -171,7 +172,16 @@ int 					ft_get_relpos(t_dlist_wrap *wrap, char c);
 int 					ft_get_currline(void);
 
 //lexer
-int 					ft_lexer(t_sh *sh);
-int						ft_print_input(t_dlist **list);
+int						ft_lexer(t_sh *sh);
+int						ft_print_lexinput(t_dlist **list);
+t_token					*ft_create_token(t_dlist *line);
+int						ft_get_token(t_token *token);
+void					ft_add_token(t_token *new, t_token **token);
+int						ft_print_lexoutput(t_token **list);
+int						ft_detect_type(t_dlist *list);
+int 					ft_lisspace(t_dlist *list);
+char 					ft_lisquote(t_dlist *list, char etalon);
+int 					ft_listok(t_dlist *list);
+int 					ft_listop(t_dlist *list);
 
 #endif

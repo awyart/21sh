@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/24 03:40:39 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 22:53:41 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/09 19:39:05 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_init_term(void)
 	}
 	if (success == 0)
 	{
-		ft_dprintf(STDERR_FILENO, "Terminal type %s is not defined\n", term_type);
+		ft_dprintf(STDERR_FILENO, "Terminal type <%S> is not defined\n", term_type);
 		exit(0);
 	}
 	return (success);
