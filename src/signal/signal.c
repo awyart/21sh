@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 13:03:12 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 17:15:53 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/14 20:00:56 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@ void	ft_signal(int sig)
 	else if (sig == SIGFPE)
 		ft_dprintf(STDERR_FILENO, "Floating point exception\n");
 	else
+	{
 		ft_dprintf(STDERR_FILENO, "ERREUR non identifiée par awsh <%d>\n", sig);
+		exit(0);
+	}
 }
 
 void	ft_getsignal(void)
 {
-	signal(SIGWINCH, &ft_signal);
+	//signal(SIGWINCH, &ft_signal);
 	signal(SIGABRT, &ft_signal);
 	signal(SIGINT, &ft_signal);
 	signal(SIGCONT, &ft_signal);
@@ -39,5 +42,5 @@ void	ft_getsignal(void)
 	signal(SIGTSTP, &ft_signal);
 	signal(SIGKILL, &ft_signal);
 	signal(SIGSTOP, &ft_signal);
-	signal(SIGQUIT, &ft_signal);
+	//signal(SIGQUIT, &ft_signal);
 }

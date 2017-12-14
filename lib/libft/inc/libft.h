@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 18:21:28 by narajaon          #+#    #+#             */
-/*   Updated: 2017/11/24 08:14:57 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/14 17:12:17 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void				ft_print_words_tables(char **str);
 long				ft_abs(long nb);
-int					get_next_line(int fd, char **line, char **rem);
 int					ft_atoi_base(const char *str, int str_base);
 void				free_tab(char **str);
 void				ft_lstback(t_list **alst, void const *content,
@@ -125,6 +124,6 @@ int					nbr_size(unsigned long long int nbr);
 int					ft_putuni_str(unsigned int uni, char *str);
 int					ft_putstr_uni(unsigned int *uni, char *str);
 int					ft_tablen(char **str);
-
+int					get_next_line(const int fd, char **line);
 
 #endif

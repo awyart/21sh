@@ -6,14 +6,14 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/13 16:33:44 by narajaon          #+#    #+#             */
-/*   Updated: 2017/11/24 07:50:04 by awyart           ###   ########.fr       */
+/*   Updated: 2017/11/29 11:26:12 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "libft.h"
+# include "../../libft/inc/libft.h"
 # include <inttypes.h>
 # include <stdarg.h>
 # include <limits.h>

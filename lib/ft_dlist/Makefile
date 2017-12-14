@@ -28,7 +28,8 @@ ft_dlist_last.o\
 ft_dlist_len.o\
 ft_dlist_replace.o\
 ft_dlist_swap.o\
-ft_dlist_to_str.o
+ft_dlist_to_str.o\
+ft_dlist_delone.o
 
 OBJ:=$(addprefix $(OBJ_D)/, $(ITEM))
 
@@ -37,20 +38,20 @@ RM=/bin/rm -f
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
-	@echo ${GREEN}Built $(NAME)${CLEAR}
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
+	@echo ${GREEN}$(NAME) built${CLEAR}
 
 ${OBJ_D}/%.o: %.c #$(HEADER)
 	@mkdir -p obj
-	$(CC) $(CFLAGS) -c -o $@ $< $(INC_D)
+	@$(CC) $(CFLAGS) -c -o $@ $< $(INC_D)
 
 clean:
-	$(RM) -r $(OBJ_D)
+	@$(RM) -r $(OBJ_D)
 	@echo ${ORANGE}Cleaning $(NAME)${CLEAR}
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 	@echo ${RED}Full cleaning $(NAME)${CLEAR}
 
 re: fclean all

@@ -48,7 +48,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@$(AR) rc $(NAME) $(OBJ)
 	@$(RANLIB) $(NAME)
-	@echo ${GREEN}Built $(NAME)${CLEAR}
+	@echo ${GREEN}$(NAME) built${CLEAR}
 
 ${OBJ_D}/%.o: %.c 
 	@$(MKDIR) $(OBJ_D)

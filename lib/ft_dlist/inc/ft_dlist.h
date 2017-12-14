@@ -6,14 +6,14 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 14:17:02 by vbastion          #+#    #+#             */
-/*   Updated: 2017/11/28 15:32:56 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/13 18:44:49 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_DLIST_H
 # define FT_DLIST_H
 
-# include "libft.h"
+# include "../../libft/inc/libft.h"
 
 typedef struct s_dlist	t_dlist;
 
@@ -41,5 +41,6 @@ void					ft_dlist_swap(t_dlist *lhs, t_dlist *rhs);
 char					*ft_dlist_to_str(t_dlist *begin, t_dlist *end);
 
 t_dlist					*ft_dlist_findchar(t_dlist *lhs, char c);
+void					ft_dlist_delone(t_dlist **to_del);
 
 #endif

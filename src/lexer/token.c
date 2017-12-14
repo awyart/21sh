@@ -5,17 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/05 19:16:02 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/09 20:36:12 by awyart           ###   ########.fr       */
+/*   Created: 2017/12/14 17:04:28 by awyart            #+#    #+#             */
+/*   Updated: 2017/12/14 18:35:56 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-t_token 	*ft_create_token(t_dlist *line)
+t_token		*ft_create_token(t_dlist *line)
 {
 	t_token	*token;
-	
+
 	if ((token = (t_token *)malloc(sizeof(t_token))) == NULL)
 		return (NULL);
 	token->first_letter = line;
@@ -25,10 +25,10 @@ t_token 	*ft_create_token(t_dlist *line)
 	return (token);
 }
 
-int 	ft_handle_word(t_dlist **list)
+int			ft_handle_word(t_dlist **list)
 {
-	char c;
-	int count;
+	char	c;
+	int		count;
 
 	count = 0;
 	while (*list != NULL)
@@ -53,7 +53,6 @@ int 	ft_handle_word(t_dlist **list)
 
 static int	ft_handle_oth(int e, t_dlist **list)
 {
-	
 	if (e == IO_NUMBER || e == PIPE || e == AND || e == OR
 		|| e == SEMICOL || e == BSLASH || e == LREDIR || e == RSREDIR)
 	{
@@ -68,21 +67,7 @@ static int	ft_handle_oth(int e, t_dlist **list)
 	return (0);
 }
 
-int 	ft_get_token(t_token *token)
-{
-	t_dlist *list;
-	
-	list = token->first_letter;
-	token->e_type = ft_detect_type(list);
-	if (token->e_type == WORD)
-		ft_handle_word(&list);
-	else 
-		ft_handle_oth(token->e_type, &list);
-	token->last_letter = list;
-	return (1);
-}
-
-void 	ft_add_token(t_token *new, t_token **token)
+static void	ft_add_token(t_token *new, t_token **token)
 {
 	t_token *tmp;
 
@@ -95,4 +80,23 @@ void 	ft_add_token(t_token *new, t_token **token)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
+}
+
+int			ft_get_token(t_token *token, t_token **ttoken)
+{
+	t_dlist	*list;
+	t_chr	*schar;
+
+	list = token->first_letter;
+	schar = list->content;
+	token->e_type = ft_detect_type(list);
+	if (token->e_type == WORD)
+		ft_handle_word(&list);
+	else
+		ft_handle_oth(token->e_type, &list);
+	while (list != NULL && ft_lisspace(list))
+		list = list->prev;
+	token->last_letter = list;
+	ft_add_token(token, ttoken);
+	return (1);
 }

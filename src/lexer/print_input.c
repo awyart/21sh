@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 19:16:02 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/09 20:37:24 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/13 17:15:46 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 int 	ft_print_lexinput(t_dlist **list)
 {
-	t_dlist *tmp;
+	t_dlist *tmp = NULL;
 	int 	count;
+	t_chr	*schar = NULL;
 
 	tmp = *list;
 	count = 0;
 	dprintf(g_fd, "\n Liste fournie au lexer: \n");
 	while (tmp != NULL)
 	{
-		dprintf(g_fd, "%s", tmp->content);
+		schar = tmp->content;
+		dprintf(g_fd, "%c", schar->c);
 		tmp = tmp->next;
 		count++;
 	}
@@ -34,6 +36,7 @@ int 	ft_print_lexoutput(t_token **list)
 	t_token *tmp;
 	t_dlist *begin;
 	int 	count;
+	t_chr	*schar = NULL;
 
 	tmp = *list;
 	count = 0;
@@ -44,11 +47,21 @@ int 	ft_print_lexoutput(t_token **list)
 		dprintf(g_fd, "|");
 		while (begin != NULL && begin != tmp->last_letter)
 		{
-			dprintf(g_fd, "%s", begin->content);
+			schar = begin->content;
+			if (schar->is_escaped == '1')
+				dprintf(g_fd, "\033[0;7;37;40m%c\033[0;0;0;0m", schar->c);
+			else
+				dprintf(g_fd, "%c", schar->c);
 			begin = begin->next;
 		}
 		if (begin)
-			dprintf(g_fd, "%s",begin->content);
+		{
+			schar = begin->content;
+			if (schar->is_escaped == '1')
+				dprintf(g_fd, "\033[0;7;37;40m%c\033[0;0;0;0m", schar->c);
+			else
+				dprintf(g_fd, "%c", schar->c);
+		}
 		dprintf(g_fd, "|<%d>->", tmp->e_type);
 		tmp = tmp->next;
 		count++;

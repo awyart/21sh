@@ -6,45 +6,40 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 15:28:02 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/05 18:33:08 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/14 16:43:47 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static int ft_ucandel(t_dlist_wrap *wrap)
-{
-	if (!wrap || !wrap->head || !wrap->last)
-		return (0);
-	return (1);
-}
-
-static int						move_left_del(t_dlist_wrap *wrapper, t_sh *sh)
+static int		move_left_del(t_dlist_wrap *wrap, t_sh *sh)
 {
 	int x;
 
-	ioctl(1, TIOCGWINSZ, &(sh->term->win));
-	if (wrapper->head == NULL || wrapper->last == NULL )
+	ioctl(1, TIOCGWINSZ, &(sh->term.win));
+	if (wrap->head == NULL || wrap->last == NULL)
 		return (0);
-	wrapper->pos -= 1;
-	wrapper->cursor = wrapper->last;
-	wrapper->last = wrapper->last->prev;
-	x = wrapper->pos;
-	if ((x + len_prompt()) % sh->term->win.ws_col == sh->term->win.ws_col - 1)
+	wrap->pos -= 1;
+	wrap->cursor = wrap->last;
+	wrap->last = wrap->last->prev;
+	x = wrap->pos;
+	if ((x + len_prompt(sh->ret)) %
+		sh->term.win.ws_col == sh->term.win.ws_col - 1)
 	{
-		tputs(tgoto(tgetstr("cm", NULL), sh->term->win.ws_col - 1, ft_get_currline() - 1), 1, &ft_putc);
+		tputs(tgoto(tgetstr("cm", NULL),
+			sh->term.win.ws_col - 1, ft_get_currline() - 1), 1, &ft_putc);
 	}
 	else
 		ft_terms_toggle_key("le");
 	return (1);
 }
 
-int						handle_del(t_dlist_wrap *wrap, t_sh *sh)
+int				handle_del(t_dlist_wrap *wrap, t_sh *sh)
 {
 	t_dlist *todel;
 	t_dlist *list;
-	
-	if (!(ft_ucandel(wrap)))
+
+	if (!wrap || !wrap->head || !wrap->last)
 		return (-1);
 	todel = wrap->last;
 	list = wrap->cursor;
@@ -59,6 +54,21 @@ int						handle_del(t_dlist_wrap *wrap, t_sh *sh)
 	ft_dlist_free(&todel, ft_memdel);
 	if (wrap->head == NULL || wrap->head->content == NULL)
 		wrap->head = list;
-	ft_refresh_line(wrap, sh, 0);
+	ft_refresh_line(wrap, sh);
+	return (1);
+}
+
+int				handle_del_right(t_dlist_wrap *wrap, t_sh *sh)
+{
+	t_dlist *list;
+
+	if ((!wrap || !wrap->head || !wrap->cursor))
+		return (-1);
+	list = wrap->cursor;
+	wrap->cursor = wrap->cursor->next;
+	ft_dlist_delone(&list);
+	if (wrap->head == NULL || wrap->head->content == NULL)
+		wrap->head = wrap->cursor;
+	ft_refresh_line(wrap, sh);
 	return (1);
 }

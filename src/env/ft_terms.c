@@ -6,13 +6,13 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 14:06:03 by vbastion          #+#    #+#             */
-/*   Updated: 2017/11/28 23:12:25 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/14 16:35:20 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int					ft_terms_init(t_terms *terms)
+int		ft_terms_init(t_terms *terms)
 {
 	tcgetattr(0, &(terms->prev_term));
 	tcgetattr(0, &(terms->this_term));
@@ -24,25 +24,26 @@ int					ft_terms_init(t_terms *terms)
 	return (1);
 }
 
-int						ft_terms_toggle(t_terms *terms, int on)
+int		ft_terms_toggle(t_terms *terms, int on)
 {
-	if (tcsetattr(0, TCSADRAIN, on ? &(terms->this_term): &(terms->prev_term)) == -1)
+	if (tcsetattr(0, TCSADRAIN, on ?
+		&(terms->this_term) : &(terms->prev_term)) == -1)
 		return (-1);
 	return (1);
 }
 
-void					ft_terms_clear(t_terms **terms)
+void	ft_terms_clear(t_terms **terms)
 {
 	free(*terms);
 	*terms = NULL;
 }
 
-int						ft_putc(int c)
+int		ft_putc(int c)
 {
 	return (write(0, &c, 1));
 }
 
-int						ft_terms_toggle_key(char *str)
+int		ft_terms_toggle_key(char *str)
 {
 	char				*tmp;
 

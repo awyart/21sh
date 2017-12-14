@@ -6,26 +6,26 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 11:50:33 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/09 16:03:40 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/14 19:58:32 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static int 	ft_no_printable(char c)
+int		ft_no_printable(char c)
 {
 	if (c < 32 || c == 127)
 		return (1);
 	return (0);
 }
 
-int				ft_read(t_sh *sh)
+int		ft_read(t_sh *sh)
 {
 	t_dlist_wrap		wrap;
 	char				c;
 	int					ret;
 
-	ioctl(1, TIOCGWINSZ, &(sh->term->win));
+	ioctl(1, TIOCGWINSZ, &(sh->term.win));
 	ft_bzero(&wrap, sizeof(t_dlist_wrap));
 	while (1)
 	{
@@ -41,10 +41,9 @@ int				ft_read(t_sh *sh)
 			handle_char(c, &wrap, sh);
 		ft_printlist(&wrap);
 	}
-	if (!(sh->reader = (t_reader *)ft_memalloc(sizeof(t_reader))))
-		return (0);
-	//ft_handle_quote(wrap);
-	sh->reader->status = 0;
-	sh->reader->content = (void *)wrap.head;
+	sh->ret = ft_handle_quote(wrap.head);
+	if (sh->ret != Q_OK)
+		ft_quote(&wrap, sh);
+	sh->list = wrap.head;
 	return (1);
 }

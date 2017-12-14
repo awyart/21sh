@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
-/*   Updated: 2017/11/28 20:09:14 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/14 16:34:13 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**envdup(void)
 	return (env);
 }
 
-int 	ft_setupenv(t_environ *env)
+int			ft_setupenv(t_environ *env)
 {
 	if (!(env->env = envdup()))
 		return (0);

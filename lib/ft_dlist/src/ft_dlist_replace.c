@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dlist_replace.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbastion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/11 19:46:23 by vbastion          #+#    #+#             */
-/*   Updated: 2017/11/11 20:39:30 by vbastion         ###   ########.fr       */
+/*   Created: 2017/12/14 17:10:15 by awyart            #+#    #+#             */
+/*   Updated: 2017/12/14 17:11:11 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void			ft_dlist_repl(t_dlist *node, t_dlist *chain)
 {
 	t_dlist				*tmp;
 	t_dlist				*last;
-	
+
 	ft_dlist_swap(node, chain);
 	tmp = chain->next == NULL ? NULL : chain->next;
 	ft_dlist_free(&chain, &ft_memdel);
@@ -49,7 +49,7 @@ static void		swap_own(t_dlist *a1, t_dlist *a2, t_dlist *b1, t_dlist *b2)
 	b2->prev = c2;
 }
 
-void 			ft_dlist_repl_mult(t_dlist *begin, t_dlist *end, t_dlist *chain)
+void			ft_dlist_repl_mult(t_dlist *begin, t_dlist *end, t_dlist *chain)
 {
 	t_dlist		*last;
 

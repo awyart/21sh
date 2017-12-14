@@ -6,47 +6,41 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:46:42 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/05 18:59:12 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/14 16:50:35 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int ft_print_list(t_dlist_wrap *wrap)
+int				ft_print_list(t_dlist_wrap *wrap, t_sh *sh)
 {
-	t_dlist 	*list;
+	t_chr	*schar;
+	t_dlist	*list;
 
-	ft_prompt();
-	list = wrap->head;
+	ft_prompt(sh->ret);
+	if (sh->ret == Q_OK)
+		list = wrap->head;
+	else
+		list = wrap->tmp;
+	if (sh->ret != Q_OK && list)
+		list = list->next;
 	while (list != NULL)
 	{
-		tputs(list->content, 1, &ft_putc);
+		schar = list->content;
+		ft_dprintf(STDOUT_FILENO, "%c", schar->c);
 		list = list->next;
 	}
 	return (0);
 }
 
-int ft_print_list_cursor(t_dlist_wrap *wrap)
+static void		ft_reset_cursor(t_win win, t_dlist_wrap *wrap, t_sh *sh)
 {
-	t_dlist 	*list;
+	int				x;
 
-	list = wrap->cursor;
-	while (list != NULL)
-	{
-		tputs(list->content, 1, &ft_putc);
-		list = list->next;
-	}
-	return (0);
-}
-
-static void ft_reset_cursor(t_win win, t_dlist_wrap *wrap)
-{
-	int x;
-
-	x = ft_count_string(wrap) - wrap->pos;
+	x = ft_count_string(wrap->head) - wrap->pos;
 	while (x > 0)
 	{
-		if ((wrap->pos + x + len_prompt()) % win.ws_col > 0)
+		if ((wrap->pos + x + len_prompt(sh->ret)) % win.ws_col > 0)
 			ft_terms_toggle_key("le");
 		else
 		{
@@ -57,24 +51,50 @@ static void ft_reset_cursor(t_win win, t_dlist_wrap *wrap)
 	}
 }
 
-void		ft_refresh_line(t_dlist_wrap *wrap, t_sh *sh, int mode)
+static void		wrap_copy(t_dlist_wrap *temp, t_dlist_wrap *wrap)
 {
-	int size;
+	temp->tmp = wrap->tmp;
+	temp->pos = wrap->pos;
+	temp->cursor = wrap->cursor;
+	temp->last = wrap->last;
+}
 
-	(void)mode;
-	size = ft_count_string(wrap);
-	size += len_prompt();
+static int		get_coord(t_dlist_wrap *wrap, int ret)
+{
+	int				size;
+
+	size = 0;
+	if (ret != Q_OK)
+		size = ft_count_string(wrap->tmp) - 1;
+	else
+		size = ft_count_string(wrap->head);
+	size += len_prompt(ret);
+	return (size);
+}
+
+void			ft_refresh_line(t_dlist_wrap *wrap, t_sh *sh)
+{
+	int				size;
+	t_dlist_wrap	temp;
+
+	size = get_coord(wrap, sh->ret);
+	wrap_copy(&temp, wrap);
+	ft_put_wrap_end(wrap, sh);
 	while (1)
 	{
+		ft_terms_toggle_key("cr");
 		ft_terms_toggle_key("ce");
-		if (size < sh->term->win.ws_col)
-		{
-			ft_terms_toggle_key("cr");
+		if (size <= sh->term.win.ws_col)
 			break ;
-		}
 		ft_terms_toggle_key("up");
-		size -= sh->term->win.ws_col;
+		size -= sh->term.win.ws_col;
 	}
-	ft_print_list(wrap);
-	ft_reset_cursor(sh->term->win, wrap);
+	wrap_copy(wrap, &temp);
+	ft_print_list(wrap, sh);
+	ft_reset_cursor(sh->term.win, wrap, sh);
+	if (get_coord(wrap, sh->ret) % sh->term.win.ws_col == 0)
+	{
+		ft_terms_toggle_key("cr");
+		ft_terms_toggle_key("do");
+	}
 }
