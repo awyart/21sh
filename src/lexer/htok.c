@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/09 18:03:03 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/14 16:52:52 by awyart           ###   ########.fr       */
+/*   Updated: 2018/01/10 17:16:22 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@ int		ft_listok(t_dlist *list)
 	char	c;
 	t_chr	*schar;
 
-	schar = list->content;
-	c = schar->c;
-	if (schar->is_escaped == '1')
-		return (0);
-	if (c == '|' || c == '&' || c == '<')
-		return (1);
-	if (c == '>' || c == ';')
-		return (1);
+	if (list != NULL)
+	{
+		schar = list->content;
+		c = schar->c;
+		if (schar->is_escaped == '1')
+			return (0);
+		if (c == '|' || c == '&' || c == '<')
+			return (1);
+		if (c == '>' || c == ';')
+			return (1);
+	}
 	return (0);
 }
 

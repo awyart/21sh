@@ -6,95 +6,93 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 15:46:42 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/14 16:50:35 by awyart           ###   ########.fr       */
+/*   Updated: 2018/02/02 14:54:21 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int				ft_print_list(t_dlist_wrap *wrap, t_sh *sh)
+int 		is_last_line(int pos, int end, int col)
 {
-	t_chr	*schar;
-	t_dlist	*list;
+	int c1;
+	int c2;
 
-	ft_prompt(sh->ret);
-	if (sh->ret == Q_OK)
-		list = wrap->head;
-	else
-		list = wrap->tmp;
-	if (sh->ret != Q_OK && list)
-		list = list->next;
-	while (list != NULL)
+	c1 = 0;
+	c2 = 0;
+	while (pos >= col)
 	{
-		schar = list->content;
-		ft_dprintf(STDOUT_FILENO, "%c", schar->c);
-		list = list->next;
+		pos -= col;
+		c1++;
 	}
+	while (end >= col)
+	{
+		end -= col;
+		c2++;
+	}
+	if (c1 == c2)
+		return (1);
 	return (0);
 }
 
-static void		ft_reset_cursor(t_win win, t_dlist_wrap *wrap, t_sh *sh)
+int 	ft_reset_cursor(t_dlist_wrap *wrap, t_sh *sh, int pos)
 {
-	int				x;
+	int offset;
+	int size;
 
-	x = ft_count_string(wrap->head) - wrap->pos;
-	while (x > 0)
+	size = ft_count_wrap(wrap, sh) + len_prompt(sh);
+	offset = size - pos + 1;
+	while (--offset)
 	{
-		if ((wrap->pos + x + len_prompt(sh->ret)) % win.ws_col > 0)
-			ft_terms_toggle_key("le");
-		else
-		{
-			ft_terms_toggle_key("up");
-			tputs(tgoto(tgetstr("ch", NULL), 0, win.ws_col - 1), 1, &ft_putc);
-		}
-		x--;
+		if (offset <= 0)
+			break;
+		ft_terms_toggle_key("le");
 	}
-}
-
-static void		wrap_copy(t_dlist_wrap *temp, t_dlist_wrap *wrap)
-{
-	temp->tmp = wrap->tmp;
-	temp->pos = wrap->pos;
-	temp->cursor = wrap->cursor;
-	temp->last = wrap->last;
-}
-
-static int		get_coord(t_dlist_wrap *wrap, int ret)
-{
-	int				size;
-
-	size = 0;
-	if (ret != Q_OK)
-		size = ft_count_string(wrap->tmp) - 1;
-	else
-		size = ft_count_string(wrap->head);
-	size += len_prompt(ret);
-	return (size);
-}
-
-void			ft_refresh_line(t_dlist_wrap *wrap, t_sh *sh)
-{
-	int				size;
-	t_dlist_wrap	temp;
-
-	size = get_coord(wrap, sh->ret);
-	wrap_copy(&temp, wrap);
-	ft_put_wrap_end(wrap, sh);
-	while (1)
-	{
-		ft_terms_toggle_key("cr");
-		ft_terms_toggle_key("ce");
-		if (size <= sh->term.win.ws_col)
-			break ;
-		ft_terms_toggle_key("up");
-		size -= sh->term.win.ws_col;
-	}
-	wrap_copy(wrap, &temp);
-	ft_print_list(wrap, sh);
-	ft_reset_cursor(sh->term.win, wrap, sh);
-	if (get_coord(wrap, sh->ret) % sh->term.win.ws_col == 0)
+	if ((pos + 1) % sh->term.win.ws_col == 0 && wrap->cursor == NULL)
 	{
 		ft_terms_toggle_key("cr");
 		ft_terms_toggle_key("do");
+		ft_terms_toggle_key("al");
 	}
+	return (size - wrap->pos);
+}
+
+int 	ft_refresh_line(t_dlist_wrap *wrap, t_sh *sh)
+{
+	int i;
+	int col;
+	int pos;
+
+	//dprintf(g_fd, "\33[H\33[2JLIST \n");
+	if (sh->ret == Q_OK)
+		pos = wrap->pos + len_prompt(sh);
+	else
+		pos = ft_count_string(wrap->tmp) + len_prompt(sh);
+	col = sh->term.win.ws_col;
+	if (col < 10)
+	{
+		dprintf(g_fd, "fenetre trop petite\n");
+		exit(0);
+	}
+	if (wrap && wrap->last_mov == DEL)
+		i = (pos + 2)/ (col) + 1;
+	else if (wrap && wrap->last_mov == LEFT)
+		i = (pos + 2)/ (col) + 1;
+	else
+		i = (pos) / (col) + 1;
+	//dprintf(g_fd, "i <%d> col <%d> pos <%d>last <%d>", i, col, pos, wrap->last_mov);
+	while (--i)
+	{
+		if (i <= 0)
+			break ;
+		ft_terms_toggle_key("cr");
+		ft_terms_toggle_key("cd");
+		ft_terms_toggle_key("al");
+		ft_terms_toggle_key("up");
+	}
+	ft_terms_toggle_key("cr");
+	ft_terms_toggle_key("cd");
+	ft_terms_toggle_key("al");
+	ft_print_list(wrap, sh);
+	ft_reset_cursor(wrap, sh, pos);
+	return (1);
 }

@@ -48,8 +48,8 @@ t_dlist		*history_down(t_dlist *word, t_dlist *cur_branch,
 		t_dlist *history)
 {
 	if (cur_branch == NULL)
-		return (word);
+		return (NULL);
 	if (cur_branch->prev == NULL)
-		return (cur_branch);
+		return (NULL);
 	return (cur_branch->prev);
 }

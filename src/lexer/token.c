@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 17:04:28 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/14 18:35:56 by awyart           ###   ########.fr       */
+/*   Updated: 2018/01/10 17:16:33 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ t_token		*ft_create_token(t_dlist *line)
 int			ft_handle_word(t_dlist **list)
 {
 	char	c;
-	int		count;
 
-	count = 0;
 	while (*list != NULL)
 	{
 		if (ft_listop(*list))
@@ -38,15 +36,10 @@ int			ft_handle_word(t_dlist **list)
 		if ((c = ft_lisquote(*list, 0)) != 0)
 		{
 			*list = (*list)->next;
-			count++;
 			while (list != NULL && ft_lisquote(*list, c) == 0)
-			{
 				*list = (*list)->next;
-				count++;
-			}
 		}
 		*list = (*list)->next;
-		count++;
 	}
 	return (1);
 }
@@ -91,7 +84,11 @@ int			ft_get_token(t_token *token, t_token **ttoken)
 	schar = list->content;
 	token->e_type = ft_detect_type(list);
 	if (token->e_type == WORD)
+	{
 		ft_handle_word(&list);
+		if (ft_listok(list))
+			list = list->prev;
+	}
 	else
 		ft_handle_oth(token->e_type, &list);
 	while (list != NULL && ft_lisspace(list))

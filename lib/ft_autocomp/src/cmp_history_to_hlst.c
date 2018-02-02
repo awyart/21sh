@@ -11,7 +11,10 @@ t_dlist		*history_to_hlst(int fd)
 	new = NULL;
 	history = NULL;
 	if ((fd = open(HISTORY, O_RDONLY | O_CREAT)) < 0)
-		exit(printf("bad fd\n"));
+	{
+		ft_putstr("[histfile] bad fd\n");
+		exit(-1);
+	}
 	while ((ret = get_next_line(fd, &str)) > 0)
 	{
 		new = input_to_dlist(str);

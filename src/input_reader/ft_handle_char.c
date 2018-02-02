@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 11:50:33 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/14 16:42:31 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/20 22:50:55 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,39 @@ static int	ft_add_list(t_dlist *new, t_dlist_wrap *wrap)
 	return (1);
 }
 
-static int	ft_insert_inlist(t_dlist *new, t_dlist_wrap *wrap, t_sh *sh)
+static int	ft_insert_inlist(t_dlist *new, t_dlist_wrap *wrap)
 {
-	new->next = wrap->cursor;
+	t_dlist *cursor;
+
+	cursor = wrap->cursor;
+	new->next = cursor;
+	cursor->prev = new;
 	new->prev = wrap->last;
 	if (wrap->last != NULL)
 		wrap->last->next = new;
 	else
 		wrap->head = new;
-	wrap->cursor->prev = new;
-	move_right(wrap, sh);
-	move_left(wrap, sh);
+	wrap->cursor = new->next;
+	wrap->last = new;
 	return (1);
 }
+
+int 		ft_print_dlist(t_dlist *list)
+{
+	t_chr *schar = NULL;
+	int ret;
+
+	ret = 0;
+	while (list != NULL)
+	{
+		schar = list->content;
+		write(STDOUT_FILENO, &schar->c, 1);
+		list = list->next;
+		ret++;
+	}
+	return (ret);
+}
+
 
 int			handle_char(char c, t_dlist_wrap *wrap, t_sh *sh)
 {
@@ -79,10 +99,14 @@ int			handle_char(char c, t_dlist_wrap *wrap, t_sh *sh)
 	}
 	else
 	{
-		if (ft_insert_inlist(new, wrap, sh) == 0)
+		if (ft_insert_inlist(new, wrap) == 0)
 			return (0);
 	}
 	wrap->pos++;
-	ft_refresh_line(wrap, sh);
+	if (wrap->cursor == NULL)
+		wrap->last_mov = ADD_END;
+	else
+		wrap->last_mov = ADD;
+	sh->offset = 0;
 	return (1);
 }

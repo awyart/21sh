@@ -6,12 +6,13 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/24 03:40:39 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/14 16:36:57 by awyart           ###   ########.fr       */
+/*   Updated: 2018/02/02 15:24:34 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
+/*
 static char	*ft_getenv_term(void)
 {
 	int		size;
@@ -27,14 +28,14 @@ static char	*ft_getenv_term(void)
 		}
 	}
 	return (NULL);
-}
+}*/
 
 int			ft_init_term(void)
 {
 	int		success;
 	char	*term_type;
 
-	if ((term_type = ft_getenv_term()) == NULL)
+	if ((term_type = ft_getenv(environ, "TERM")) == NULL)
 	{
 		ft_dprintf(STDERR_FILENO,
 			"Specify a terminal type with 'setenv TERM <yourtype>\n");

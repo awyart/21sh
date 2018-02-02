@@ -46,9 +46,10 @@ void		print_history(t_dlist *input, t_dlist *branch)
 void		print_hlst_content(t_dlist *list)
 {
 	char	*c;
+	t_chr	*content;
 
-	c = list->content;
-	printf("|%c|", *c);
+	content = list->content;
+	printf("|%c|", content->c);
 }
 
 void		hl_print_next(t_dlist *list, void (*print)())
@@ -56,9 +57,9 @@ void		hl_print_next(t_dlist *list, void (*print)())
 	while (list)
 	{
 		print(list);
-//		printf("\n");
 		list = list->next;
 	}
+	printf("\n");
 }
 
 void		print_branch(t_dlist *branch)
@@ -76,17 +77,3 @@ void		print_branch(t_dlist *branch)
 		branch = child;
 	}
 }
-
-/*
-void		hl_print(t_dlist *list)
-{
-	t_lev		*tmp;
-
-	tmp = NULL;
-	while (list)
-	{
-		tmp = list->content;
-		tputs(&tmp->content, 1, &int_putchar);
-		list = list->next;
-	}
-}*/

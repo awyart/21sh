@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/24 03:43:21 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/14 16:34:13 by awyart           ###   ########.fr       */
+/*   Updated: 2018/02/02 15:14:57 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,24 @@ int			ft_setupenv(t_environ *env)
 		return (0);
 	env->size = ft_tablen(env->env);
 	return (1);
+}
+
+char		*get_env_var(char *val, char **environ)
+{
+	int		size;
+	char	*str;
+	char 	*new;
+
+	size = ft_tablen(environ);
+	new = ft_strjoin(val, "=");
+	while (size--)
+	{
+		if ((ft_strncmp(new, environ[size - 1], 5) == 0))
+		{
+			str = environ[size - 1] + 5;
+			return (str);
+		}
+	}
+	ft_strdel(&new);
+	return (NULL);
 }

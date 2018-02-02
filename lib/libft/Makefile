@@ -7,7 +7,7 @@ CLEAR:="\033[0m"
 
 CC:=gcc
 CFLAGS:=-Wall -Wextra -Werror
-CFLAGS+=-O2
+CFLAGS+=-g3
 
 MKDIR:=mkdir -p
 RANLIB:=ranlib
@@ -19,7 +19,10 @@ LIB_D:=..
 INCLUDES:= -I inc
 
 ITEM:=\
+	ft_print_tab.o\
+	free_str.o\
 	free_tab.o \
+	free_tab_str.o \
 	ft_abs.o \
 	ft_atoi.o \
 	ft_atoi_base.o \

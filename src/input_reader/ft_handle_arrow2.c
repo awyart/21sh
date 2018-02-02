@@ -22,7 +22,9 @@ int						move_end(t_dlist_wrap *wrap, t_sh *sh)
 		if (ret == 0)
 			break ;
 		ret = move_right(wrap, sh);
+		ft_refresh_line(wrap, sh);
 	}
+	wrap->last_mov = END;
 	return (1);
 }
 
@@ -36,6 +38,8 @@ int						move_begin(t_dlist_wrap *wrap, t_sh *sh)
 		if (ret == 0)
 			break ;
 		ret = move_left(wrap, sh);
+		ft_refresh_line(wrap, sh);
 	}
+	wrap->last_mov = BEGIN;
 	return (1);
 }

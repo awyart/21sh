@@ -21,3 +21,13 @@ t_lev		*new_lev_node_c(char *c)
 	new->child = NULL;
 	return (new);
 }
+
+t_lev		*lev_dup(t_lev *lev)
+{
+	t_lev	*new;
+
+	new = (t_lev *)malloc(sizeof(0));
+	new->content = lev->content;
+	new->child = lev->child;
+	return (new);
+}

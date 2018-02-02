@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 11:50:33 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/14 19:58:32 by awyart           ###   ########.fr       */
+/*   Updated: 2018/01/29 15:39:06 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_no_printable(char c)
 {
-	if (c < 32 || c == 127)
+	if (c < 32 || c > 125)
 		return (1);
 	return (0);
 }
@@ -39,11 +39,14 @@ int		ft_read(t_sh *sh)
 		}
 		else
 			handle_char(c, &wrap, sh);
-		ft_printlist(&wrap);
+		ft_refresh_line(&wrap, sh);
+		ft_printlist(&wrap, sh);
 	}
 	sh->ret = ft_handle_quote(wrap.head);
 	if (sh->ret != Q_OK)
 		ft_quote(&wrap, sh);
 	sh->list = wrap.head;
+	ft_put_wrap_end(&wrap, sh);
+	ft_refresh_line(&wrap, sh);
 	return (1);
 }

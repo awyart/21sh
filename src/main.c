@@ -6,58 +6,79 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/15 11:46:12 by vbastion          #+#    #+#             */
-/*   Updated: 2017/12/14 19:58:35 by awyart           ###   ########.fr       */
-/*                                                                            */
+/*   Updated: 2018/02/02 16:50:12 by awyart           ###   ########.fr       */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void		ft_exit(int c)
-{
-	exit(c);
-}
+t_sh			*g_sh;
 
-static void	ft_start_process(t_sh *sh)
+void			ft_start_process(t_sh *sh)
 {
+	g_sh = sh;
 	while (1)
 	{
-		sh->curr_line = ft_get_currline();
-		ft_prompt(sh->ret);
+		ft_prompt(sh);
+		dprintf(g_fd, "\n --<Prompt OK>---\n ");
 		ft_read(sh);
 		write(STDOUT_FILENO, "\n", 1);
+		dprintf(g_fd, "\n --<Read OK>---\n ");
 		ft_lexer(sh);
 		dprintf(g_fd, "\n --<Lexer OK>---\n ");
-		ft_parser(sh);
+		//here
+		if (ft_parser(sh) == 0)
+		 {
+		 	ft_printf("\n");
+		 	continue;
+		}
 		dprintf(g_fd, "\n --<Parser ok>---\n ");
 		//ft_extension();
 		ft_execution(sh);
-
-		//free d truks
+		dprintf(g_fd, "\n --<Exec ok>---\n ");
+		update_history(sh->hist, sh->list);
+		//free needed sh
 	}
 }
 
-static int	ft_init(t_sh *sh)
+int				ft_init(t_sh *sh)
 {
+	g_sh = sh;
+	sh->dir.dir_name = get_cur_dir(sh->dir.cur_dir);
 	ft_init_term();
 	ft_terms_init(&sh->term);
 	ft_terms_toggle(&sh->term, 1);
+	ft_init_keytab();
 	ft_setupenv(&sh->env);
 	return (1);
 }
 
-int			main(void)
+void			flush_sh(t_sh *sh)
+{
+	free_hlist(&sh->list);
+	free_hlist(&sh->hist->cur_branch);
+	free_autocmp_res(&sh->hist->branch_root);
+	//free btree
+	//free process
+	//free token
+	//free yanked list in list_wrap
+}
+
+int				main(void)
 {
 	t_sh				sh;
-	static t_hist		hist;
+	t_hist				hist;
 
-	sh.hist = &hist;
 	g_fd = open("/dev/ttys001", O_WRONLY);
+	history_init(&hist);
+	sh.hist = &hist;
 	sh.ret = Q_OK;
 	setlocale(LC_ALL, "");
 	if (!(ft_init(&sh)))
 		return (0);
+	g_loop = TRUE;
 	ft_getsignal();
 	tputs(tgetstr("cl", NULL), 1, &ft_putc);
+//	sig_intercepter();
 	ft_start_process(&sh);
 	//free(&sh);
 	return (0);

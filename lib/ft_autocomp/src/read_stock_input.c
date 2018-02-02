@@ -20,7 +20,6 @@ void		add_dlist_to_child(t_dlist **parent, t_dlist *child)
 	else
 	{
 		new = (*parent)->content;
-		//maybe some leaks HERE
 		if (new->content == '\0')
 			return ;
 		if (new->child == NULL)
@@ -34,14 +33,17 @@ t_dlist		*str_to_dlist(char *input)
 {
 	t_dlist		*word;
 	t_dlist		*entire;
+	t_lev		*lev;
 	int			i;
+	char		c;
 
 	i = 0;
 	word = NULL;
 	entire = NULL;
 	while (input[i])
 	{
-		word = ft_hlstnew(new_lev_node_c(&input[i]));
+		c = input[i];
+		word = ft_hlstnew(new_lev_node_c(&c));
 		ft_hlstadd_back(&entire, word);
 		i++;
 	}
@@ -55,13 +57,15 @@ t_dlist		*input_to_dlist(char *input)
 	t_dlist		*word;
 	t_dlist		*entire;
 	int			i;
+	char		c;
 
 	i = 0;
 	word = NULL;
 	entire = NULL;
 	while (input[i])
 	{
-		word = ft_hlstnew(new_lev_node_c(&input[i]));
+		c = input[i];
+		word = ft_hlstnew(new_lev_node_c(&c));
 		ft_hlstadd_back(&entire, word);
 		i++;
 	}

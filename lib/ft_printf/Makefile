@@ -7,7 +7,7 @@ CLEAR:="\033[0m"
 
 CC:=gcc
 CFLAGS:=-Wall -Wextra -Werror
-CFLAGS+=-O2
+CFLAGS+=-g3
 
 MKDIR:=mkdir -p
 RANLIB:=ranlib

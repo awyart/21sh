@@ -7,6 +7,7 @@ CLEAR:="\033[0m"
 
 CC:=gcc
 CFLAGS:=-Wall -Wextra -Werror
+CFLAGS+=-g3
 
 OBJ_D:=obj
 LIB_D:=..

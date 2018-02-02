@@ -7,13 +7,13 @@ MKDIR:=mkdir -p
 ifeq ($(DEBUG),yes)
 CFLAGS:=-g3 -fsanitize=address
 else
-CFLAGS:=-Wall -Wextra -Werror
+CFLAGS:= -O2 -Wall -Wextra -Werror
 endif
-
 INC_D:=inc
 SCR_D:=src
 LIB_D:=lib
 OBJ_D:=obj
+HEAD =$(INC_D)/header.h
 
 INCLUDES = -I inc \
 		-I lib/ft_printf/inc \
@@ -41,7 +41,6 @@ ITEM = main.o \
 		ft_read_input.o \
 		refresh_line.o \
 		mvcursor.o \
-		info_cursor.o \
 		lexer.o \
 		print_input.o \
 		token.o \
@@ -55,7 +54,20 @@ ITEM = main.o \
 		process.o \
 		utility.o \
 		launchjob.o \
-		execution.o
+		execution.o \
+		info_cursor.o \
+		cd.o \
+		echo.o \
+		env.o \
+		exit.o \
+		setenv.o \
+		unsetenv.o \
+		build_in.o \
+		copy_paste.o\
+		cmd.o \
+		get_str_in_quotes.o \
+		spec_char.o
+
 
 OBJ:=$(addprefix $(OBJ_D)/, $(ITEM))
 
@@ -67,13 +79,15 @@ vpath %.c src \
 		src/lexer \
 		src/parser \
 		src/job \
-		src/execution
+		src/execution \
+		src/buildin \
+		src/str_format
 
 vpath %.h inc ../libft/inc
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(HEAD) Makefile
 	@$(MAKE) -C lib/libft
 	@$(MAKE) -C lib/ft_printf
 	@$(MAKE) -C lib/ft_dlist
@@ -102,3 +116,10 @@ fclean: clean
 	@echo "it's fclean"
 
 re: fclean all
+
+git :
+	@git add .
+	@git commit -m "${MSG}"
+
+gitp : fclean git
+	git push

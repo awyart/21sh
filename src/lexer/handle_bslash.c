@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 15:55:24 by awyart            #+#    #+#             */
-/*   Updated: 2017/12/14 16:52:08 by awyart           ###   ########.fr       */
+/*   Updated: 2017/12/14 21:32:58 by awyart           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	ft_handle_backslash(t_dlist **line)
 	t_dlist *tmp;
 
 	list = *line;
-	list = NULL;
 	schar = NULL;
 	tmp = NULL;
 	while (list != NULL)

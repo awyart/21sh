@@ -6,7 +6,7 @@
 /*   By: awyart <awyart@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 18:21:28 by narajaon          #+#    #+#             */
-/*   Updated: 2017/12/14 17:12:17 by awyart           ###   ########.fr       */
+/*   Updated: 2018/01/26 14:20:41 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,7 @@ int					ft_putstr_uni(unsigned int *uni, char *str);
 int					ft_tablen(char **str);
 int					get_next_line(const int fd, char **line);
 
+void				free_str(char **to_free);
+void				free_tab_str(char ***tab_str);
+void				ft_print_tab(char **tab_p);
 #endif
