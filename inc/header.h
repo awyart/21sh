@@ -45,17 +45,17 @@ unsigned short ws_xpixel;	 horizontal size, pixels
 unsigned short ws_ypixel;	vertical size, pixels 
 */
 
-# define K_UP		65
-# define K_DOWN		66
-# define K_RIGHT	67
-# define K_LEFT		68
-# define K_END		70
-# define K_HOME		72
-# define K_PUP		53
-# define K_PDOWN	54
-# define K_DEL		51 
-# define K_CUT		11
-# define K_YANK		12
+// # define K_UP		65
+// # define K_DOWN		66
+// # define K_RIGHT	67
+// # define K_LEFT		68
+// # define K_END		70
+// # define K_HOME		72
+// # define K_PUP		53
+// # define K_PDOWN	54
+// # define K_DEL		51 
+// # define K_CUT		11
+// # define K_YANK		12
 
 # define ERR_MALLOC "erreur dans l'attribution de memoire malloc \n"
 
@@ -86,18 +86,18 @@ enum					e_quote_status
 	QUOT_SIZE
 };
 
-enum 					e_mov
-{
-	DEL,
-	LEFT,
-	RIGHT,
-	ADD,
-	ADD_END,
-	END,
-	BEGIN,
-	HIST,
-	MOV_SIZE
-};
+// enum 					e_mov
+// {
+// 	DEL,
+// 	LEFT,
+// 	RIGHT,
+// 	ADD,
+// 	ADD_END,
+// 	END,
+// 	BEGIN,
+// 	HIST,
+// 	MOV_SIZE
+// };
 
 enum 					e_type
 {
@@ -133,6 +133,24 @@ enum 					e_build_in
 	BUILD_IN_SIZE
 };
 
+enum 					e_cap
+{
+	K_UP,
+	K_DOWN,
+	K_RIGHT,
+	K_LEFT,
+	K_END,
+	K_HOME,
+	K_PUP,
+	K_PDOWN,
+	K_DEL,
+	K_DELR,
+	K_CUT,
+	K_YANK,
+	CAP_SIZE
+};
+
+
 typedef struct			s_op
 {
 	char				*cmd;
@@ -153,17 +171,22 @@ typedef struct			s_environ
 {	
 	char				**env;
 	int 				size;
-}						t_environ;
+}
+						t_environ;
+
+typedef struct			s_cap
+{	
+	char				cap[3];
+	int					(*f)(t_dlist_wrap *);
+}						t_cap;
+
 
 typedef struct			s_dlist_wrap
 {
 	t_dlist				*head;
-	t_dlist				*cursor;
-	t_dlist				*last;
-	t_dlist				*tmp;
 	t_dlist				*yanked;
 	int 				pos;
-	enum e_mov			last_mov;
+	int 				size;
 }						t_dlist_wrap;
 
 typedef struct			s_token
@@ -232,7 +255,7 @@ typedef struct			s_sh
 }						t_sh;
 
 //init
-void 					ft_init_keytab(void);
+
 
 //term
 char					*ft_getterm(char **env);
@@ -287,37 +310,26 @@ void					ft_start_process(t_sh *sh);
 int						ft_init(t_sh *sh);
 
 //input_reader
+int						handle_char(char buf[3], t_dlist_wrap *wrap);
+int						handle_del(t_dlist_wrap *wrap);
+int						handle_del_right(t_dlist_wrap *wrap);
+int						move_left(t_dlist_wrap *wrap);
+int						move_right(t_dlist_wrap *wrap);
 int						ft_read(t_sh *sh);
-int						handle_char(char c, t_dlist_wrap *wrap, t_sh *sh);
-int						handle_del(t_dlist_wrap *wrap, t_sh *sh);
-int						handle_del_right(t_dlist_wrap *wrap, t_sh *sh);
-int						handle_non_char(char c, t_dlist_wrap *wrap, t_sh *sh);
-int						move_up(t_dlist_wrap *wrap, t_sh *sh, int mode);
-int						move_down(t_dlist_wrap *wrap, t_sh *sh, int mode);
-int						move_updown(t_dlist_wrap *wrap, t_sh *sh, char c);
-int						move_left(t_dlist_wrap *wrap, t_sh *sh);
-int						move_right(t_dlist_wrap *wrap, t_sh *sh);
-int						ft_add_character(char c, t_dlist_wrap *wrap);
-int						ft_printlist(t_dlist_wrap *wrap, t_sh *sh);
-int						ft_print_list(t_dlist_wrap *wrap, t_sh *sh);
-int						ft_handle_quote(t_dlist *list);
-int						ft_quote(t_dlist_wrap *wrap, t_sh *sh);
-int						ft_no_printable(char c);
-int						move_left_word(t_dlist_wrap *wrap, t_sh *sh);
-int						move_up_ctrl(t_dlist_wrap *wrap, t_sh *sh);
-int						move_down_ctrl(t_dlist_wrap *wrap, t_sh *sh);
-int						move_begin(t_dlist_wrap *wrap, t_sh *sh);
-int						move_end(t_dlist_wrap *wrap, t_sh *sh);
-int						get_next_char(char *c);
-int 					ft_put_wrap_end(t_dlist_wrap *wrap, t_sh *sh);
-//int						get_coord(t_sh *sh, t_dlist_wrap *wrap);
-int						is_last_line(int pos, int end, int col);
-int						ft_reset_cursor(t_dlist_wrap *wrap, t_sh *sh, int pos);
-void					move_cursor_right(t_dlist_wrap *wrap, t_sh *sh);
-void					move_cursor_left(t_dlist_wrap *wrap, t_sh *sh);
-int						move_dlist_left(t_dlist_wrap *wrap);
-int						move_dlist_right(t_dlist_wrap *wrap);
+int 					get_func(char buf[3]);
+t_dlist					*cur_list(t_dlist_wrap *wrap);
+int 					is_printable(char buf[3]);
+int 					is_break(char buf[3]);
+int 					refresh_line(t_dlist_wrap *wrap, t_sh *sh);
+int						ft_printlist(t_dlist_wrap *wrap, t_sh *sh, char buf[3]);
 
+//cap
+int						handle_del(t_dlist_wrap *wrap);
+int						handle_del_right(t_dlist_wrap *wrap);
+int						move_right(t_dlist_wrap *wrap);
+int						move_left(t_dlist_wrap *wrap);
+
+	
 // cursor
 int 					ft_count_string(t_dlist *list);
 int						ft_count_wrap(t_dlist_wrap *wrap, t_sh *sh);
@@ -360,7 +372,6 @@ int 					simple_exec(t_sh *sh, t_btree *btree);
 //execution
 void 					ft_execution(t_sh *sh);
 
-void					*g_handlenonchar[SCHAR_MAX];
-t_schar					g_spec_char[SCHAR_NB];
+t_cap					g_handleinput[CAP_SIZE + 1];		
 
 #endif

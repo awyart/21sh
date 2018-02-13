@@ -10,7 +10,7 @@ int			move_right(t_dlist_wrap *wrap)
 
 int			move_left(t_dlist_wrap *wrap)
 {
-	if (wrap->pos <= 1)
+	if (wrap->pos <= 0)
 		return (0);
 	wrap->pos--;
 	return (1);

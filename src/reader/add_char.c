@@ -1,6 +1,6 @@
 #include "header.h"
 
-t_dlist		*create_node(char c)
+static t_dlist		*create_node(char c)
 {
 	t_dlist	*tmp;
 	t_chr	*schar;
@@ -17,19 +17,50 @@ t_dlist		*create_node(char c)
 	schar->is_escaped = '0';
 	return (tmp);
 }
+
+t_dlist 	*cur_list(t_dlist_wrap *wrap)
+{
+	int pos;
+	t_dlist *list;
+
+	list = wrap->head;
+	pos = wrap->pos;
+	while (--pos && list != NULL)
+	{
+		if (pos <= 0)
+			break;
+		list = list->next;
+	}
+	return (list);
+}
+
 static int add_in_list(t_dlist_wrap *wrap, t_dlist *new)
 {
 	t_dlist *list;
 	t_dlist *next;
 
-	list = cur_list(wrap);
-	next = list->next;
-	if (next != NULL)
-		next->prev = new;
-	list->next = new;
-	new->next = next;
-	new->prev = list;
-	return (0);
+
+	if (wrap->pos == 0)
+	{
+		list = wrap->head;
+		new->next = list;
+		new->prev = NULL;
+		list->prev = new;
+		wrap->head = new;
+	}
+	else
+	{
+		list = cur_list(wrap);
+		if (!list)
+			return (0);
+		next = list->next;
+		if (next != NULL)
+			next->prev = new;
+		list->next = new;
+		new->next = next;
+		new->prev = list;
+	}
+	return (1);
 }
 
 int			handle_char(char buf[3], t_dlist_wrap *wrap)
@@ -37,7 +68,7 @@ int			handle_char(char buf[3], t_dlist_wrap *wrap)
 	t_dlist *new;
 
 	new = NULL;
-	if ((new = create_node(c)) == NULL)
+	if ((new = create_node(buf[0])) == NULL)
 		return (-1);
 	if (wrap->head == NULL)
 	{

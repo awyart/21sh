@@ -34,28 +34,17 @@ ITEM = main.o \
 		ft_terms_get.o\
 		signal.o \
 		prompt.o \
-		ft_handle_char.o\
-		ft_handle_del.o\
-		ft_handle_non_char.o\
-		ft_handle_arrow.o\
-		ft_read_input.o \
-		refresh_line.o \
-		mvcursor.o \
 		lexer.o \
 		print_input.o \
 		token.o \
 		detect.o \
 		htok.o \
-		heredoc.o \
 		parser.o \
 		handle_bslash.o\
-		handle_ctrl.o\
-		ft_handle_arrow2.o\
 		process.o \
 		utility.o \
 		launchjob.o \
 		execution.o \
-		info_cursor.o \
 		cd.o \
 		echo.o \
 		env.o \
@@ -63,10 +52,16 @@ ITEM = main.o \
 		setenv.o \
 		unsetenv.o \
 		build_in.o \
-		copy_paste.o\
 		cmd.o \
 		get_str_in_quotes.o \
-		spec_char.o
+		spec_char.o \
+		add_char.o \
+		del_char.o \
+		mv.o \
+		buf.o\
+		read.o \
+		refresh_line.o \
+		visu.o
 
 
 OBJ:=$(addprefix $(OBJ_D)/, $(ITEM))
@@ -75,13 +70,13 @@ vpath %.c src \
 		src/env \
 		src/signal \
 		src/prompt \
-		src/input_reader \
 		src/lexer \
 		src/parser \
 		src/job \
 		src/execution \
 		src/buildin \
-		src/str_format
+		src/str_format \
+		src/reader \
 
 vpath %.h inc ../libft/inc
 

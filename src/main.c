@@ -19,23 +19,23 @@ void			ft_start_process(t_sh *sh)
 	while (1)
 	{
 		ft_prompt(sh);
-		dprintf(g_fd, "\n --<Prompt OK>---\n ");
+		//dprintf(g_fd, "\n --<Prompt OK>---\n ");
 		ft_read(sh);
 		write(STDOUT_FILENO, "\n", 1);
-		dprintf(g_fd, "\n --<Read OK>---\n ");
-		ft_lexer(sh);
-		dprintf(g_fd, "\n --<Lexer OK>---\n ");
-		//here
-		if (ft_parser(sh) == 0)
-		 {
-		 	ft_printf("\n");
-		 	continue;
-		}
-		dprintf(g_fd, "\n --<Parser ok>---\n ");
-		//ft_extension();
-		ft_execution(sh);
-		dprintf(g_fd, "\n --<Exec ok>---\n ");
-		update_history(sh->hist, sh->list);
+		//dprintf(g_fd, "\n --<Read OK>---\n ");
+		// ft_lexer(sh);
+		// dprintf(g_fd, "\n --<Lexer OK>---\n ");
+		// //here
+		// if (ft_parser(sh) == 0)
+		// {
+		//  	ft_printf("\n");
+		//  	continue;
+		// }
+		// dprintf(g_fd, "\n --<Parser ok>---\n ");
+		// // ft_extension();
+		// ft_execution(sh);
+		// dprintf(g_fd, "\n --<Exec ok>---\n ");
+		// update_history(sh->hist, sh->list);
 		//free needed sh
 	}
 }
@@ -47,7 +47,6 @@ int				ft_init(t_sh *sh)
 	ft_init_term();
 	ft_terms_init(&sh->term);
 	ft_terms_toggle(&sh->term, 1);
-	ft_init_keytab();
 	ft_setupenv(&sh->env);
 	return (1);
 }
@@ -69,7 +68,7 @@ int				main(void)
 	t_hist				hist;
 
 	g_fd = open("/dev/ttys001", O_WRONLY);
-	history_init(&hist);
+	//history_init(&hist);
 	sh.hist = &hist;
 	sh.ret = Q_OK;
 	setlocale(LC_ALL, "");

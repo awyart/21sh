@@ -17,6 +17,12 @@ int		ft_terms_init(t_terms *terms)
 	tcgetattr(0, &(terms->prev_term));
 	tcgetattr(0, &(terms->this_term));
 	terms->this_term.c_lflag &= ~(ICANON | ECHO);
+	// terms->this_term.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP
+ //                 | INLCR | IGNCR | ICRNL | IXON);
+	// terms->this_term.c_oflag &= ~OPOST;
+	// terms->this_term.c_lflag &= ~(ECHO | ECHONL | ISIG | ICANON | IEXTEN);
+	// terms->this_term.c_cflag &= ~(CSIZE | PARENB);
+	// terms->this_term.c_cflag |= CS8;
 	terms->this_term.c_cc[VMIN] = 1;
 	terms->this_term.c_cc[VTIME] = 0;
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &(terms->win));
