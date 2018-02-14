@@ -177,7 +177,7 @@ typedef struct			s_environ
 typedef struct			s_cap
 {	
 	char				cap[3];
-	int					(*f)(t_dlist_wrap *);
+	int					(*f)();
 }						t_cap;
 
 
@@ -187,6 +187,7 @@ typedef struct			s_dlist_wrap
 	t_dlist				*yanked;
 	int 				pos;
 	int 				size;
+	int 				col;
 }						t_dlist_wrap;
 
 typedef struct			s_token
@@ -310,30 +311,40 @@ void					ft_start_process(t_sh *sh);
 int						ft_init(t_sh *sh);
 
 //input_reader
+int						ft_count_string(t_dlist *lst);
 int						handle_char(char buf[3], t_dlist_wrap *wrap);
 int						handle_del(t_dlist_wrap *wrap);
 int						handle_del_right(t_dlist_wrap *wrap);
 int						move_left(t_dlist_wrap *wrap);
 int						move_right(t_dlist_wrap *wrap);
 int						ft_read(t_sh *sh);
-int 					get_func(char buf[3]);
+int						get_func(char buf[3]);
 t_dlist					*cur_list(t_dlist_wrap *wrap);
-int 					is_printable(char buf[3]);
-int 					is_break(char buf[3]);
-int 					refresh_line(t_dlist_wrap *wrap, t_sh *sh);
+int						is_printable(char buf[3]);
+int						is_break(char buf[3]);
+int 					is_updown(char buf[3]);
+int						refresh_line(t_dlist_wrap *wrap, t_sh *sh);
 int						ft_printlist(t_dlist_wrap *wrap, t_sh *sh, char buf[3]);
+int						reset_cursor(t_dlist_wrap *wrap, t_sh *sh);
+int						move_end(t_dlist_wrap  *wrap);
+int						move_home(t_dlist_wrap  *wrap);
+
+int 					move_updown(t_dlist_wrap *wrap, char buf[3], t_sh *sh);
 
 //cap
 int						handle_del(t_dlist_wrap *wrap);
 int						handle_del_right(t_dlist_wrap *wrap);
 int						move_right(t_dlist_wrap *wrap);
 int						move_left(t_dlist_wrap *wrap);
+int						init_cap_del(char a, char b, int i, int (*f)());
+int						init_cap_esc(char b, char c, int i, int (*f)());
+int						move_sdown(t_dlist_wrap *wrap);
+int						move_sup(t_dlist_wrap *wrap);
+int 					apply_cap(char buf[3], t_dlist_wrap *wrap, t_sh *sh);
 
-	
 // cursor
-int 					ft_count_string(t_dlist *list);
 int						ft_count_wrap(t_dlist_wrap *wrap, t_sh *sh);
-int 					ft_refresh_line(t_dlist_wrap *wrap, t_sh *sh);
+int						ft_refresh_line(t_dlist_wrap *wrap, t_sh *sh);
 
 //copy paste
 t_dlist					*cut_list(t_dlist_wrap *wrap, t_sh *sh);
@@ -372,6 +383,7 @@ int 					simple_exec(t_sh *sh, t_btree *btree);
 //execution
 void 					ft_execution(t_sh *sh);
 
-t_cap					g_handleinput[CAP_SIZE + 1];		
-
+t_cap					g_handleinput[CAP_SIZE + 1];	
+int g_i1;	
+int g_i2;
 #endif

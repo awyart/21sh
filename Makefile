@@ -61,8 +61,8 @@ ITEM = main.o \
 		buf.o\
 		read.o \
 		refresh_line.o \
-		visu.o
-
+		visu.o \
+		hist.o \
 
 OBJ:=$(addprefix $(OBJ_D)/, $(ITEM))
 

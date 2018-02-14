@@ -13,6 +13,7 @@ int			ft_printlist(t_dlist_wrap *wrap, t_sh *sh, char buf[3])
 	dprintf(g_fd, "pos  : %d\nsize : %d\n", wrap->pos, wrap->size);
 	dprintf(g_fd, "col : %d\n", sh->term.win.ws_col);
 	dprintf(g_fd, "<%d><%d><%d>\n", buf[0], buf[1], buf[2]);
+	dprintf(g_fd, "offset : <%d>\n size +len:<%d>\nic<%d>\n", g_i1, g_i2, g_i2 % sh->term.win.ws_col);
 	while (list != NULL)
 	{
 		schar = list->content;

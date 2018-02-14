@@ -8,12 +8,20 @@ int 	reset_cursor(t_dlist_wrap *wrap, t_sh *sh)
 
 	offset = wrap->size - wrap->pos + 1;
 	i = wrap->size + len_prompt(sh);
+	col = sh->term.win.ws_col;
+	if ((wrap->size + len_prompt(sh)) % col == 0)
+	{
+		ft_terms_toggle_key("cr");
+		ft_terms_toggle_key("do");
+	}
+	g_i1 = offset;
+	g_i2 = i;
 	while (--offset)
 	{
 		if (offset <= 0)
 			break;
 		col = sh->term.win.ws_col;
-		if (i % sh->term.win.ws_col == 1)
+		if (i % sh->term.win.ws_col == 0)
 		{
 			ft_terms_toggle_key("cr");
 			ft_terms_toggle_key("up");
@@ -22,8 +30,8 @@ int 	reset_cursor(t_dlist_wrap *wrap, t_sh *sh)
 		}
 		else
 			ft_terms_toggle_key("le");
-	}
-	return (wrap->size - wrap->pos);
+		i--;
+	}	return (wrap->size - wrap->pos);
 }
 
 int				ft_print_list(t_dlist_wrap *wrap, t_sh *sh)
@@ -49,15 +57,14 @@ int 	refresh_line(t_dlist_wrap *wrap, t_sh *sh)
 	static int pos = 0;
 
 	//dprintf(g_fd, "\33[H\33[2JLIST \n");
-	ioctl(1, TIOCGWINSZ, &(sh->term.win));
-	col = sh->term.win.ws_col;
+	col = wrap->col;
 	if (col < 10)
 	{
 		dprintf(g_fd, "fenetre trop petite\n");
 		exit(0);
 	}
-	i = (pos + len_prompt(sh) - 1) / (col) + 1;
-	//dprintf(g_fd, "i <%d> col <%d> pos <%d>last <%d>", i, col, pos, wrap->last_mov);
+	i = (pos + len_prompt(sh)) / (col) + 1; // ajout  a la fin ok et mouvement gauche droite
+	dprintf(g_fd, "i <%d> col <%d> pos <%d>", i, col, pos);
 	while (--i)
   	{
 		if (i <= 0)
@@ -71,7 +78,6 @@ int 	refresh_line(t_dlist_wrap *wrap, t_sh *sh)
 	ft_terms_toggle_key("cd");
 	ft_terms_toggle_key("al");
 	ft_print_list(wrap, sh);
-	reset_cursor(wrap, sh);
 	pos = wrap->pos;
 	return (1);
 }

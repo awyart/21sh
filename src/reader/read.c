@@ -1,11 +1,6 @@
 #include "header.h"
 
-// int init_cap_del(char b, char c, int i , int (*f)(t_sh *, char **))
-// {
-
-// }
-
-int init_cap_esc(char b, char c, int i, int (*f)(t_dlist_wrap *))
+int init_cap_esc(char b, char c, int i, int (*f)())
 {
 	if (f == NULL)
 		return (0);
@@ -16,6 +11,27 @@ int init_cap_esc(char b, char c, int i, int (*f)(t_dlist_wrap *))
 	return (1);
 }
 
+int init_cap_del(char a, char b, int i, int (*f)())
+{
+	if (f == NULL)
+		return (0);
+	g_handleinput[i].cap[0] = a;
+	g_handleinput[i].cap[1] = b;
+	g_handleinput[i].cap[2] = 0;
+	g_handleinput[i].f = f;
+	return (1);
+}
+
+int init_cap_shift(char a, char b, int i, int (*f)())
+{
+	if (f == NULL)
+		return (0);
+	g_handleinput[i].cap[0] = 59;
+	g_handleinput[i].cap[1] = a;
+	g_handleinput[i].cap[2] = b;
+	g_handleinput[i].f = f;
+	return (1);
+}
 
 int 	init_cap(void)
 {
@@ -29,15 +45,16 @@ int 	init_cap(void)
 		g_handleinput[i].cap[1] = 0;
 		g_handleinput[i].cap[2] = 0;
 	}
-	// init_cap_esc(91, 65, K_UP, &move_updown);
-	// init_cap_esc(91, 66, K_DOWN, &move_updown);
+	init_cap_esc(91, 65, K_UP, &move_updown);
+	init_cap_esc(91, 66, K_DOWN, &move_updown);
 	init_cap_esc(91, 67, K_RIGHT, &move_right);
 	init_cap_esc(91, 68, K_LEFT, &move_left);
-	// init_cap_esc(K_END);
-	// init_cap_esc(K_PUP);
-	// init_cap_esc(K_PDOWN);
-	// init_cap_esc(K_DEL);
-	// init_cap_esc(K_DELR);
+	init_cap_esc(91, 70, K_END, &move_end);
+	init_cap_esc(91, 72, K_HOME, &move_home);
+	init_cap_shift(50, 65, K_PUP, &move_sup);
+	init_cap_shift(50 ,66, K_PDOWN, &move_sdown);
+	init_cap_del(127, 0, K_DEL, &handle_del);
+	init_cap_del(126, 0, K_DELR, &handle_del_right);
 	// init_cap_esc(K_CUT);
 	// init_cap_esc(K_YANK);
 // 	//g_handleinput[K_UP].f = &move_updown;
@@ -72,34 +89,44 @@ int			get_func(char buf[3])
 	return (-2);
 }
 
+int 	apply_cap(char buf[3], t_dlist_wrap *wrap, t_sh *sh)
+{
+	int ret = 0;
+	int (*ptr)() = NULL;
+
+	if (is_break(buf))
+	{
+		refresh_line(wrap, sh);
+		return (0);
+	}
+	ret = get_func(buf);
+	if (ret >= 0)
+	{
+		ptr = g_handleinput[ret].f;
+		ret = ptr(wrap, buf, sh);
+	}
+	else if (ret == -1)
+	 	handle_char(buf, wrap);
+	refresh_line(wrap, sh);
+	reset_cursor(wrap, sh);
+	return (1);
+}
+
 int			ft_read(t_sh *sh)
 {
 	char			buf[3];
-	int				(*ptr)() = NULL;
-	int 			ret = 0;
 	t_dlist_wrap	wrap;
 
 	ft_bzero(&wrap, sizeof(t_dlist_wrap));
 	init_cap();
 	while (1)
 	{
+		ioctl(1, TIOCGWINSZ, &(sh->term.win));
+		wrap.col = sh->term.win.ws_col;
 		ft_bzero(buf, 3);
 		read(STDIN_FILENO, buf,  3);
-		if (is_break(buf))
-		{
-			refresh_line(&wrap, sh);
+		if (apply_cap(buf, &wrap, sh) == 0)
 			break ;
-		}
-		ret = get_func(buf);
-		dprintf(g_fd, "<%d>\n", ret);
-		if (ret >= 0)
-		{
-			ptr = g_handleinput[ret].f;
-			ret = ptr(&wrap, sh);
-		}
-		else if (ret == -1)
-		 	handle_char(buf, &wrap);
-		refresh_line(&wrap, sh);
 		ft_printlist(&wrap, sh, buf);
 	}
 	sh->list = wrap.head;
