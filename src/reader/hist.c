@@ -1,79 +1,30 @@
 #include "header.h"
 
-int			ft_count_string(t_dlist *lst)
+static void		printlist(t_dlist *list)
 {
-	t_dlist	*list;
-	int		count;
-
-	count = 0;
-	list = lst;
-	while (list != NULL)
-	{
-		count++;
-		list = list->next;
-	}
-	return (count);
-}
-
-static void	printlist(t_dlist *list)
-{
-	t_chr  *schar;
+	t_chr	*schar;
 
 	while (list != NULL)
 	{
 		schar = list->content;
-		if (schar  == NULL)
-			exit(3);
-		dprintf(1, "%c", schar->c);
+		ft_printf("%s%c%s", KGRN, schar->c, KNRM);
 		list = list->next;
 	}
 }
 
-static int move_down(t_dlist_wrap *wrap, t_sh *sh, int mode)
+int			move_hist(t_dlist_wrap *wrap, t_sh *sh, int mode, int action)
 {
-	t_dlist     *begin;
-	t_dlist 	*list;
+	t_dlist		*begin;
+	t_dlist		*list;
 	int			var;
-	int i;
-
+	int			i;
 
 	begin = wrap->head;
-	list = completion_res(IR_DOWN, begin, sh->hist);
+	list = completion_res(action, begin, sh->hist);
 	var = ((mode == 0) ? wrap->pos : ft_count_string(list));
 	i = (var + len_prompt(sh)) / sh->term.win.ws_col + 1;
 	while (--i)
-  	{
-		if (i <= 0)
-			break ;
-		ft_terms_toggle_key("cr");
-		ft_terms_toggle_key("cd");
-		ft_terms_toggle_key("al");
-		ft_terms_toggle_key("up");
-	}
-	ft_terms_toggle_key("cr");
-	ft_terms_toggle_key("cd");
-	ft_terms_toggle_key("al");
-	ft_prompt(sh);
-	if (list == NULL)
-		printlist(wrap->head);
-	else
-		printlist(list);
-	return (1);
-}
-
-static int move_up(t_dlist_wrap *wrap, t_sh *sh, int mode)
-{
-	t_dlist     *begin;
-	t_dlist 	*list;
-	int			var;
-	int 		i;
-
-	begin = wrap->head;
-	list = completion_res(IR_UP, begin, sh->hist);
-	var = ((mode == 0) ? wrap->pos : ft_count_string(list));
-	i = (var + len_prompt(sh)) / sh->term.win.ws_col + 1;
-	while (--i)
-  	{
+	{
 		if (i <= 0)
 			break ;
 		ft_terms_toggle_key("cr");
@@ -89,31 +40,40 @@ static int move_up(t_dlist_wrap *wrap, t_sh *sh, int mode)
 	return (1);
 }
 
-
-int move_updown(t_dlist_wrap *wrap, char buf[3], t_sh *sh)
+static void		modif_hist(t_dlist_wrap *wrap, t_sh *sh)
 {
-	
-	if (buf == NULL)
-		exit(0);
+	t_dlist *todel;
+
+	todel = wrap->head;
+	wrap->head = sh->hist->cur_branch;
+	wrap->pos = ft_count_string(wrap->head);
+	wrap->size = ft_count_string(wrap->head);
+	wrap->tmp = NULL;
+	free_hlist(&todel);
+}
+
+int				move_updown(t_dlist_wrap *wrap, char buf[3], t_sh *sh)
+{
+	if (sh->ret == Q_HEREDOC)
+		return (0);
 	if (buf[2] == 65)
-		move_up(wrap, sh, 0);
+		move_hist(wrap, sh, 0, IR_UP);
 	else if (buf[2] == 66)
-		move_down(wrap, sh, 0);
+		move_hist(wrap, sh, 0, IR_DOWN);
 	while (1)
 	{
-		read(STDIN_FILENO, buf,  3);
+		read(STDIN_FILENO, buf, 3);
 		if (!(is_updown(buf)))
 			break ;
 		if (buf[2] == 65)
-			move_up(wrap, sh, 1);
+			move_hist(wrap, sh, 1, IR_UP);
 		else if (buf[2] == 66)
-			move_down(wrap, sh, 1);
+			move_hist(wrap, sh, 1, IR_DOWN);
 	}
-	wrap->head = sh->hist->cur_branch;
-	wrap->pos = ft_count_string(wrap->head) + 1;
-	//free ancien wrap->head
+	if (sh->hist->cur_branch != NULL)
+		modif_hist(wrap, sh);
+	sh->hist_multi = ft_count_string(sh->hist->cur_branch);
 	sh->hist->cur_branch = NULL;
-	completion_res(2, NULL, NULL);
-	apply_cap(buf, wrap, sh);
-	return (1);
+	completion_res(IR_RESET, NULL, NULL);
+	return (apply_cap(buf, wrap, sh));
 }

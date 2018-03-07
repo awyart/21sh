@@ -9,15 +9,18 @@ t_schar		g_spec_char[SCHAR_NB] =
 	{"\\r", '\r'},
 	{"\\t", '\t'},
 	{"\\v", '\v'},
-	{"\\\\", '\\'},
-	{"\\'", '\''},
-	{"\\\"", '\"'},
 	{"", 0},
 };
 
+bool		converted_spe_char(char c)
+{
+	return (c == 'a' || c == 'f' || c == 'n' || c == 'b' || c == 'r' ||
+			c == 't' || c == 'v');
+}
+
 int			is_esc_char(char *str)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	while (i < SCHAR_NB)
@@ -36,11 +39,13 @@ char		*replace_spec_char(char *user_in, int size)
 	int			i;
 
 	i = 0;
-	if ((formated = ft_memalloc(size)) == NULL)
+	if ((formated = ft_memalloc(size * sizeof(char))) == NULL)
 		return (NULL);
 	while (*user_in != '\0')
 	{
-		if ((esc_index = is_esc_char(user_in)) >= 0)
+		if (*user_in == '\\' && *(user_in + 1) && converted_spe_char(user_in[1]) == 0)
+			formated[i] = *(++user_in);
+		else if ((esc_index = is_esc_char(user_in)) >= 0)
 		{
 			formated[i] = g_spec_char[esc_index].asc;
 			user_in++;

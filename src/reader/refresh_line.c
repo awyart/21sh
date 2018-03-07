@@ -1,6 +1,12 @@
 #include "header.h"
 
-int 	reset_cursor(t_dlist_wrap *wrap, t_sh *sh)
+static void	nextline(void)
+{
+	ft_terms_toggle_key("cr");
+	ft_terms_toggle_key("do");
+}
+
+int			reset_cursor(t_dlist_wrap *wrap, t_sh *sh)
 {
 	int offset;
 	int i;
@@ -10,16 +16,9 @@ int 	reset_cursor(t_dlist_wrap *wrap, t_sh *sh)
 	i = wrap->size + len_prompt(sh);
 	col = sh->term.win.ws_col;
 	if ((wrap->size + len_prompt(sh)) % col == 0)
+		nextline();
+	while (--offset > 0)
 	{
-		ft_terms_toggle_key("cr");
-		ft_terms_toggle_key("do");
-	}
-	g_i1 = offset;
-	g_i2 = i;
-	while (--offset)
-	{
-		if (offset <= 0)
-			break;
 		col = sh->term.win.ws_col;
 		if (i % sh->term.win.ws_col == 0)
 		{
@@ -31,16 +30,20 @@ int 	reset_cursor(t_dlist_wrap *wrap, t_sh *sh)
 		else
 			ft_terms_toggle_key("le");
 		i--;
-	}	return (wrap->size - wrap->pos);
+	}
+	return (wrap->size - wrap->pos);
 }
 
-int				ft_print_list(t_dlist_wrap *wrap, t_sh *sh)
+int			ft_print_list(t_dlist_wrap *wrap, t_sh *sh)
 {
 	t_chr	*schar;
 	t_dlist	*list;
 
 	ft_prompt(sh);
-	list = wrap->head;
+	if (sh->ret == Q_OK || wrap->tmp == NULL)
+		list = wrap->head;
+	else
+		list = wrap->tmp->next;
 	while (list != NULL)
 	{
 		schar = list->content;
@@ -50,23 +53,33 @@ int				ft_print_list(t_dlist_wrap *wrap, t_sh *sh)
 	return (0);
 }
 
-int 	refresh_line(t_dlist_wrap *wrap, t_sh *sh)
+int			count_tmp(t_dlist_wrap *wrap, int pos)
 {
 	int i;
-	int col;
-	static int pos = 0;
+	int size;
 
-	//dprintf(g_fd, "\33[H\33[2JLIST \n");
+	size = ft_count_string(wrap->head);
+	i = ft_count_string(wrap->tmp);
+	return (pos - (size - i));
+}
+
+int			refresh_line(t_dlist_wrap *wrap, t_sh *sh)
+{
+	int			i;
+	int			col;
+	static int	pos = 0;
+
+	if (sh->test == 1)
+		pos = 0;
+	if (sh->hist_multi != 0)
+		pos = sh->hist_multi;
 	col = wrap->col;
-	if (col < 10)
-	{
-		dprintf(g_fd, "fenetre trop petite\n");
-		exit(0);
-	}
-	i = (pos + len_prompt(sh)) / (col) + 1; // ajout  a la fin ok et mouvement gauche droite
-	dprintf(g_fd, "i <%d> col <%d> pos <%d>", i, col, pos);
+	if (sh->ret == Q_OK)
+		i = (pos + len_prompt(sh)) / (col) + 1;
+	else
+		i = (count_tmp(wrap, pos) + len_prompt(sh)) / (col) + 1;
 	while (--i)
-  	{
+	{
 		if (i <= 0)
 			break ;
 		ft_terms_toggle_key("cr");
@@ -79,5 +92,6 @@ int 	refresh_line(t_dlist_wrap *wrap, t_sh *sh)
 	ft_terms_toggle_key("al");
 	ft_print_list(wrap, sh);
 	pos = wrap->pos;
+	sh->hist_multi = 0;
 	return (1);
 }

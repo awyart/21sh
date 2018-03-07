@@ -7,7 +7,7 @@ MKDIR:=mkdir -p
 ifeq ($(DEBUG),yes)
 CFLAGS:=-g3 -fsanitize=address
 else
-CFLAGS:= -O2 -Wall -Wextra -Werror
+CFLAGS:= -g -O2 -Wall -Wextra -Werror
 endif
 INC_D:=inc
 SCR_D:=src
@@ -27,42 +27,51 @@ LIBRARIES = -L lib/ft_printf -lftprintf \
 			-L lib/ft_autocomp -lautocompletion \
 			-lcurses
 
-ITEM = main.o \
+ITEM = \
+		main.o \
 		envdup.o \
 		getterm.o \
 		ft_terms.o \
 		ft_terms_get.o\
 		signal.o \
 		prompt.o \
-		lexer.o \
-		print_input.o \
-		token.o \
-		detect.o \
-		htok.o \
-		parser.o \
-		handle_bslash.o\
-		process.o \
+		heredoc_read.o \
 		utility.o \
-		launchjob.o \
-		execution.o \
 		cd.o \
 		echo.o \
 		env.o \
 		exit.o \
 		setenv.o \
 		unsetenv.o \
-		build_in.o \
-		cmd.o \
+		built_in.o \
 		get_str_in_quotes.o \
-		spec_char.o \
 		add_char.o \
+		buf.o \
+		copy_paste.o \
 		del_char.o \
+		hist.o \
 		mv.o \
-		buf.o\
+		mv_home.o\
+		mv_multi.o \
+		mv_word.o \
+		init_cap.o \
 		read.o \
 		refresh_line.o \
-		visu.o \
-		hist.o \
+		exec_procs.o \
+		fd_manip.o \
+		split_by_semicol.o \
+		utils.o \
+		parse_redir.o \
+		str_conversion.o \
+		redir_funs.o \
+		redir_funs2.o \
+		spec_char.o \
+		split_into_args.o \
+		exec_bins.o \
+		exec_builtins.o \
+		exit_erro.o \
+		heredoc.o \
+		shlvl.o \
 
 OBJ:=$(addprefix $(OBJ_D)/, $(ITEM))
 
@@ -70,13 +79,12 @@ vpath %.c src \
 		src/env \
 		src/signal \
 		src/prompt \
-		src/lexer \
-		src/parser \
-		src/job \
-		src/execution \
-		src/buildin \
+		src/builtin \
 		src/str_format \
 		src/reader \
+		src/redirs \
+		src/exec \
+		src/parser
 
 vpath %.h inc ../libft/inc
 

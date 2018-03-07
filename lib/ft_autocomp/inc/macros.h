@@ -6,7 +6,7 @@
 /*   By: narajaon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 11:39:44 by narajaon          #+#    #+#             */
-/*   Updated: 2018/01/24 17:26:47 by narajaon         ###   ########.fr       */
+/*   Updated: 2018/03/02 14:02:18 by narajaon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@
 
 # define EMJ_ARRW 0x27A1
 
-# define STR(x)		ft_printf(#x " = |%s|\n", x)
-# define NBR(x)		ft_printf(#x " = |%d|\n", x)
-# define CHAR(x)	ft_printf(#x " = |%c|\n", x)
+# define STR(x)		ft_printf(#x " = !%s!\n", x)
+# define NBR(x)		ft_printf(#x " = !%d!\n", x)
+# define CHAR(x)	ft_printf(#x " = !%c!\n", x)
 # define EX			exit(1);
 # define ICI		ft_printf("ICI\n");
 # define LA			ft_printf("LA\n");
+# define SEP		ft_printf("\n-----------------------------------------\n");
 
-# define HISTORY ".mysh_history"
+# define HISTORY "/tmp/.mysh_history"
 # define STDI 0
 # define STDO 1
 # define STDE 2
